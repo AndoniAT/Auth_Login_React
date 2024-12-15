@@ -15,7 +15,7 @@ To run project :
 - Run :
     > npm run dev
 
-
+<hr/>
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -66,4 +66,16 @@ export default tseslint.config({
   },
 })
 ```
+<hr/>
+
+# Other project details
+
+This project uses Tailwind for styles.
+
+> npm install -D tailwindcss postcss autoprefixer
+> npx tailwindcss init -p
+
+See [tailwind documentation](https://tailwindcss.com/docs/guides/vite) to see how to install tailwind with vite.
+
+
 
