@@ -73,6 +73,7 @@ export default tseslint.config({
 This project uses Tailwind for styles.
 
 > npm install -D tailwindcss postcss autoprefixer
+
 > npx tailwindcss init -p
 
 See [tailwind documentation](https://tailwindcss.com/docs/guides/vite) to see how to install tailwind with vite.
