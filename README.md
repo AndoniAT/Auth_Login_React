@@ -80,3 +80,23 @@ See [tailwind documentation](https://tailwindcss.com/docs/guides/vite) to see ho
 
 
 
+<h6>== USER ROLES ==</h6>
+
+<table style="margin: 0 auto; width: fit-content; border: 1px solid black;">
+  <tr style="background: gray;">
+    <th style="border: 1px solid black;">Role</th>
+    <th style="border: 1px solid black;">Code</th>
+  </tr>
+  <tr>
+    <td style="border: 1px solid black">Admin</td>
+    <td style="border: 1px solid black">1000</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid black">User</td>
+    <td style="border: 1px solid black">2000</td>
+  </tr>
+</table>
+
+
+<hr/>
+<h5>Author: <i>Andoni ALONSO TORT</i><h5>

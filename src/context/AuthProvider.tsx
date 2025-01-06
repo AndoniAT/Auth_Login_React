@@ -5,12 +5,13 @@ interface UserType {
     lastname: string,
     email: string,
     password?: string
+    roles: number[]
 }
 
 interface AuthType {
-    user: UserType,
-    accessToken: string,
-    refreshToken: string    
+    user?: UserType,
+    accessToken?: string,
+    refreshToken?: string
 }
 
 interface AuthContextType {

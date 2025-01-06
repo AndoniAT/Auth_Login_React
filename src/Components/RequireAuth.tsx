@@ -1,19 +1,32 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
-const RequireAuth = () => {
+interface RolesType {
+    allowedRoles: number[]
+}
+
+const RequireAuth = ( { allowedRoles } : RolesType ) => {
     const { auth } = useAuth();
     const location = useLocation();
 
+    const userConnected = auth?.user; 
+    const hasRoleToAccess = auth?.user?.roles?.find( role => allowedRoles?.includes( role ) );
+
     return (
-        auth?.user
-            ?
-                <Outlet/>
-            :
-            <>
-                {/** If there is no user go back to the login page */}
-                <Navigate to="/login" state={{ from: location }} replace />
-            </>
+            userConnected
+                ? hasRoleToAccess
+                    ?
+                        <Outlet/>
+                    :
+                    <>
+                        {/** If we don't have right we go to the unauthorized page */}
+                        <Navigate to="/unauthorized" state={{ from: location }} replace />
+                    </>    
+                :
+                <>
+                    {/** If there is no user go back to the login page */}
+                    <Navigate to="/login" state={{ from: location }} replace />
+                </>
     );
 }
 
