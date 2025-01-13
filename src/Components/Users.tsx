@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import axios from '../api/axios';
 import { UserType } from "../interfaces/User";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const Users = () => {
     const [ users, setUsers ] = useState([]);
+    const axiosPrivate = useAxiosPrivate();
 
     useEffect( () => {
         let isMounted = true;
@@ -11,17 +12,16 @@ const Users = () => {
 
         const getUsers = async () => {
             try {
-                const resp = await axios.get('/api/users', {
+                const resp = await axiosPrivate.get('/api/users', {
                     signal: controller.signal
                 } );
-                console.log(resp.data);
 
                 if( isMounted ) {
                     setUsers( resp.data );
                 }
 
             } catch( e ) {
-                console.error( e );
+                console.error( "Error getting users ! ", e );
             }
         }
 
@@ -46,6 +46,7 @@ const Users = () => {
             :
                 <p>No users to display</p>
             }
+            <br />
         </article>
     )
 }

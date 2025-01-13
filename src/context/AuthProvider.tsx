@@ -1,23 +1,5 @@
 import { createContext, useState, ReactNode  } from "react";
-
-interface UserType {
-    firstname: string,
-    lastname: string,
-    email: string,
-    password?: string
-    roles: number[]
-}
-
-interface AuthType {
-    user?: UserType,
-    accessToken?: string,
-    refreshToken?: string
-}
-
-interface AuthContextType {
-    auth: AuthType;
-    setAuth: ( auth: object ) => void;
-}
+import { AuthContextType } from "../interfaces/Auth";
 
 interface AuthProviderProps {
     children: ReactNode;
