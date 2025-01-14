@@ -16,27 +16,20 @@ const useAxiosPrivate = () => {
                 }
                 return config;
             },
-            error => {
-                return Promise.reject( error )
-            }
+            error => Promise.reject( error )
         );
 
         const responseIntercept = axiosPrivate.interceptors.response.use(
-            response => {
-                return response
-            },
+            response => response,
             async ( error ) => {
                 const prevRequest = error?.config;
                 if( error?.response?.status === 403 && !prevRequest?.sent ) {
-                    try {
-                        prevRequest.sent = true;
-                        const newAccessToken = await refresh();
-                        prevRequest.headers[ 'Authorization' ] = `Bearer ${newAccessToken}`;
-                        return axiosPrivate( prevRequest );
-                    } catch( e ) {
-                        console.log( e );
-                    }
+                    prevRequest.sent = true;
+                    const newAccessToken = await refresh();
+                    prevRequest.headers[ 'Authorization' ] = `Bearer ${newAccessToken}`;
+                    return axiosPrivate( prevRequest );
                 }
+
                 return Promise.reject( error );
             }
         );

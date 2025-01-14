@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { axiosPrivate } from '../api/axios';
+import axios, { axiosPrivate } from '../api/axios';
 import AuthContext from "../context/AuthProvider";
 import { useContext } from "react";
 
@@ -30,7 +30,10 @@ function LoginForm( ) {
             password: password.value
         };
 
-        axiosPrivate.post( '/api/auth/login', user )
+        axios.post( '/api/auth/login', user, { 
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true 
+        } )
         .then( res => {
             const { data } = res;
             setAuth( data );

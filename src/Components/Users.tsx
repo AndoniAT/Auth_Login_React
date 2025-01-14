@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import { UserType } from "../interfaces/User";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Users = () => {
     const [ users, setUsers ] = useState([]);
     const axiosPrivate = useAxiosPrivate();
+    const navigate = useNavigate();
+    const location = useLocation();
 
+    
     useEffect( () => {
-        let isMounted = true;
         const controller = new AbortController();
+        let isMounted = true;
 
         const getUsers = async () => {
             try {
@@ -20,8 +24,13 @@ const Users = () => {
                     setUsers( resp.data );
                 }
 
-            } catch( e ) {
-                console.error( "Error getting users ! ", e );
+            } catch( e:any ) {
+                if( e?.code == 'ERR_CANCELED' ) {
+                    console.log( 'Request aborted !', e );
+                } else {
+                    console.error( "Error getting users ! ", e );
+                    navigate('/login', { state: { from: location }, replace: true } );
+                }
             }
         }
 
@@ -30,7 +39,8 @@ const Users = () => {
         return () => {
             isMounted = false;
             controller.abort();
-        };
+        }
+
     }, [] );
 
     return (
