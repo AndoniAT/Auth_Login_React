@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import axios, { axiosPrivate } from '../api/axios';
+import axios from '../api/axios';
 import AuthContext from "../context/AuthProvider";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 interface LoginInterface {
     email: HTMLInputElement,
@@ -10,7 +10,7 @@ interface LoginInterface {
 
 
 function LoginForm( ) {
-    const { setAuth } = useContext( AuthContext );
+    const { setAuth, persist, setPersist } = useContext( AuthContext );
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/'; // Go where the user wanted to go before to be in login page
@@ -42,6 +42,14 @@ function LoginForm( ) {
         .catch( console.error );
     };
 
+    const togglePersist = () => {
+        setPersist( ( prev: boolean ) => !prev );
+    };
+
+    useEffect( () => {
+        localStorage.setItem( 'persist', JSON.stringify( persist ) );
+    }, [ persist ] );
+
     return (
         <form className="max-w-md mx-auto mt-14 border-2 border-slate-400 p-10 rounded-lg bg-slate-200 dark:bg-gray-900"
         onSubmit={onSubmit}>
@@ -58,9 +66,14 @@ function LoginForm( ) {
             </div>
             <div className="flex items-start mb-5">
                 <div className="flex items-center h-5">
-                <input id="remember" type="checkbox" value="" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" />
+                <input id="persist" type="checkbox" value="" 
+                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
+                        onChange={togglePersist}
+                        checked={persist}/>
                 </div>
-                <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
+                <label htmlFor="persist" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    Trust this device
+                </label>
             </div>
             <div className="flex items-start mb-5">
                 <Link to='/createAccount' className="text-blue-900 hover:underline dark:text-blue-500">I don't have an account</Link>

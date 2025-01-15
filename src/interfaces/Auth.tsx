@@ -8,4 +8,6 @@ export interface AuthType {
 export interface AuthContextType {
     auth: AuthType;
     setAuth: ( auth: object ) => void;
+    persist: boolean,
+    setPersist: React.Dispatch<React.SetStateAction<boolean>>;
 }
