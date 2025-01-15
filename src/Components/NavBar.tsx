@@ -1,6 +1,17 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import useAuth from "../hooks/useAuth";
+import useLogout from "../hooks/useLogout";
 
 const NavBar = () => {
+    const { auth } = useAuth();
+    const logout = useLogout();
+    const navigate = useNavigate();
+
+    const signOut = async() => {
+        await logout();
+        navigate( '/linkpage' );
+    };
+
     return (
         <>
             <nav className="bg-slate-300 dark:bg-gray-900">
@@ -9,9 +20,17 @@ const NavBar = () => {
                         <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
                         <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Andoni ALONSO TORT</span>
                     </a>
-                    <div className="flex items-center space-x-6 rtl:space-x-reverse">
-                        <Link to='/login' className="text-sm  text-blue-600 dark:text-blue-500 hover:underline">Login</Link>
-                    </div>
+                    {
+                        ( auth?.user ) ?
+                        <div className="flex items-center space-x-6 rtl:space-x-reverse">
+                            <p onClick={signOut} className="text-sm text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Logout</p>
+                        </div>
+                        :
+                        <div className="flex items-center space-x-6 rtl:space-x-reverse">
+                            <Link to='/login' className="text-sm  text-blue-600 dark:text-blue-500 hover:underline">Login</Link>
+                        </div>
+
+                    }
                 </div>
             </nav>
             <nav className="bg-slate-200 dark:bg-gray-700">
