@@ -2,8 +2,7 @@ import { UserType } from "./User";
 
 export interface AuthType {
     user?: UserType,
-    accessToken?: string,
-    refreshToken?: string
+    accessToken?: string
 }
 
 export interface AuthContextType {

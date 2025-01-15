@@ -1,8 +1,10 @@
 export interface UserType {
     _id: string,
+    createdAt: string,
+    updatedAt: string,
     firstname: string,
     lastname: string,
-    password?: string,
     email: string,
     roles: number[]
+    password?: string,
 }
