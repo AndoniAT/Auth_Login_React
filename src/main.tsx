@@ -5,6 +5,11 @@ import './index.css'
 import AppRoute from './AppRoute.tsx'
 import { AuthProvider } from './context/AuthProvider.tsx'
 import { BrowserRouter } from 'react-router-dom'
+import { disableReactDevTools } from '@fvilers/disable-react-devtools'
+
+if( process.env.NODE_ENV === 'production' ) {
+  disableReactDevTools();
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
