@@ -1,13 +1,13 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from '../api/axios';
 import AuthContext from "../context/AuthProvider";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import useInput from "../hooks/useInput";
 
-interface LoginInterface {
+/*interface LoginInterface {
     email: HTMLInputElement,
     password: HTMLInputElement
-};
-
+};*/
 
 function LoginForm( ) {
     const { setAuth, persist, setPersist } = useContext( AuthContext );
@@ -15,9 +15,24 @@ function LoginForm( ) {
     const location = useLocation();
     const from = location.state?.from?.pathname || '/'; // Go where the user wanted to go before to be in login page
 
+    const emailRef = useRef<HTMLInputElement>( null );
+    const errRef = useRef<HTMLInputElement>( null );
+
+    const [ email, resetEmail, emailAttr ] = useInput( 'email', '' );
+    const [ pwd, setPwd ] = useState( '' );
+    const [ errMsg, setErrMsg ] = useState( '' );
+
+    useEffect( () => {
+            emailRef?.current?.focus();
+    }, [] );
+
+    useEffect( () => {
+        setErrMsg( '' );
+    }, [ email, pwd ] );
+
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const form = e.currentTarget;
+        /*const form = e.currentTarget;
         const formElements = form.elements as typeof form.elements & LoginInterface
 
         const {
@@ -28,6 +43,11 @@ function LoginForm( ) {
         const user = {
             email: email.value,
             password: password.value
+        };*/
+        
+        const user = {
+            email,
+            password: pwd
         };
 
         axios.post( '/api/auth/login', user, { 
@@ -37,9 +57,23 @@ function LoginForm( ) {
         .then( res => {
             const { data } = res;
             setAuth( data );
+            setPwd( '' );
+            resetEmail();
             navigate( from, { replace: true } );
         } )
-        .catch( console.error );
+        .catch( err => {
+            if( !err.response ) {
+                setErrMsg( 'No server response' );
+            } else if ( err?.response?.status == 400 ) {
+                setErrMsg( 'Missing email or password')
+            } else if( err?.response?.status == 401 ) {
+                setErrMsg( 'Unauthorized' );
+            } else {
+                setErrMsg( 'Login failed' );
+            }
+
+            errRef?.current?.focus();
+        } );
     };
 
     const togglePersist = () => {
@@ -56,13 +90,22 @@ function LoginForm( ) {
             <div className="w-full text-center">
                 <span className="text-2xl font-semibold whitespace-nowrap dark:text-white">LOGIN</span>
             </div>
+            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
             <div className="mb-5">
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="email@example.com" required />
+                <input 
+                    ref={emailRef}
+                    {...emailAttr}
+                    type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="email@example.com"required
+                />
             </div>
             <div className="mb-5">
                 <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-                <input type="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                <input 
+                    value={pwd}
+                    onChange={ e => setPwd( e.currentTarget.value ) }
+                    type="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required />
             </div>
             <div className="flex items-start mb-5">
                 <div className="flex items-center h-5">

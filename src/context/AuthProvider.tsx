@@ -13,8 +13,9 @@ const AuthContext = createContext<AuthContextType>( {
 } );
 
 export const AuthProvider = ( { children } : AuthProviderProps ) => {
+    const item = localStorage.getItem( 'persist' );
     const [ auth, setAuth ] = useState( {} );
-    const [ persist, setPersist ] = useState<boolean>( JSON.parse( localStorage.getItem( 'persist' ) || 'false' ) );
+    const [ persist, setPersist ] = useState<boolean>( item ? JSON.parse( item ) : false );
 
     return (
         <AuthContext.Provider value={ { auth, setAuth, persist, setPersist } }>
