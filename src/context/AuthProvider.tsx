@@ -8,17 +8,17 @@ interface AuthProviderProps {
 const AuthContext = createContext<AuthContextType>( { 
     auth: {}, 
     setAuth: () => {},
-    persist: false,
-    setPersist: () => false
+    /*persist: false,
+    setPersist: () => false*/
 } );
 
 export const AuthProvider = ( { children } : AuthProviderProps ) => {
-    const item = localStorage.getItem( 'persist' );
     const [ auth, setAuth ] = useState( {} );
-    const [ persist, setPersist ] = useState<boolean>( item ? JSON.parse( item ) : false );
+    //const item = localStorage.getItem( 'persist' );
+    //const [ persist, setPersist ] = useState<boolean>( item ? JSON.parse( item ) : false );
 
     return (
-        <AuthContext.Provider value={ { auth, setAuth, persist, setPersist } }>
+        <AuthContext.Provider value={ { auth, setAuth } }>
             {children}
         </AuthContext.Provider>
     )

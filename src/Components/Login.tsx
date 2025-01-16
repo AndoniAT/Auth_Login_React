@@ -3,6 +3,7 @@ import axios from '../api/axios';
 import AuthContext from "../context/AuthProvider";
 import { useContext, useEffect, useRef, useState } from "react";
 import useInput from "../hooks/useInput";
+import useToogle from "../hooks/useToogle";
 
 /*interface LoginInterface {
     email: HTMLInputElement,
@@ -10,7 +11,7 @@ import useInput from "../hooks/useInput";
 };*/
 
 function LoginForm( ) {
-    const { setAuth, persist, setPersist } = useContext( AuthContext );
+    const { setAuth } = useContext( AuthContext );
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/'; // Go where the user wanted to go before to be in login page
@@ -21,6 +22,7 @@ function LoginForm( ) {
     const [ email, resetEmail, emailAttr ] = useInput( 'email', '' );
     const [ pwd, setPwd ] = useState( '' );
     const [ errMsg, setErrMsg ] = useState( '' );
+    const [ check, toogleCheck ] = useToogle( 'persist', false );
 
     useEffect( () => {
             emailRef?.current?.focus();
@@ -76,13 +78,13 @@ function LoginForm( ) {
         } );
     };
 
-    const togglePersist = () => {
+    /*const togglePersist = () => {
         setPersist( ( prev: boolean ) => !prev );
     };
 
     useEffect( () => {
         localStorage.setItem( 'persist', JSON.stringify( persist ) );
-    }, [ persist ] );
+    }, [ persist ] );*/
 
     return (
         <form className="max-w-md mx-auto mt-14 border-2 border-slate-400 p-10 rounded-lg bg-slate-200 dark:bg-gray-900"
@@ -111,8 +113,8 @@ function LoginForm( ) {
                 <div className="flex items-center h-5">
                 <input id="persist" type="checkbox" value="" 
                         className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
-                        onChange={togglePersist}
-                        checked={persist}/>
+                        onChange={toogleCheck}
+                        checked={check}/>
                 </div>
                 <label htmlFor="persist" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                     Trust this device
