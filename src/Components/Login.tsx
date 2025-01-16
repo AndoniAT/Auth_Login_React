@@ -58,7 +58,8 @@ function LoginForm( ) {
         } )
         .then( res => {
             const { data } = res;
-            setAuth( data );
+            const { accessToken } = data;
+            setAuth( { user: email, accessToken } );
             setPwd( '' );
             resetEmail();
             navigate( from, { replace: true } );

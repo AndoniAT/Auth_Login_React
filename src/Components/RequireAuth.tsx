@@ -1,5 +1,7 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import { jwtDecode } from 'jwt-decode';
+import { AccesTokenDecodedType } from "../interfaces/Auth";
 
 interface RolesType {
     allowedRoles: number[]
@@ -8,9 +10,11 @@ interface RolesType {
 const RequireAuth = ( { allowedRoles } : RolesType ) => {
     const { auth } = useAuth();
     const location = useLocation();
+    const decoded = auth?.accessToken ? jwtDecode<AccesTokenDecodedType>( auth.accessToken ) : undefined;
+    const userConnected = decoded?.user;
+    const roles = userConnected ? userConnected.roles : [];
 
-    const userConnected = auth?.user; 
-    const hasRoleToAccess = auth?.user?.roles?.find( role => allowedRoles?.includes( role ) );
+    const hasRoleToAccess = roles?.find( ( role:number ) => allowedRoles?.includes( role ) );
 
     return (
             userConnected

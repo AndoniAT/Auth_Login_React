@@ -16,6 +16,14 @@ To run project :
     > npm run dev
 
 <hr/>
+
+Other dependencies installed :
+<ul>
+  <li>axios: For API requests</li>
+  <li>@fvilers/disable-react-devtools : To disable react devtools in browser</li>
+  <li>jwt-decode : To decode accesToken received from Backend</li>
+</ul>
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

@@ -11,3 +11,10 @@ export interface AuthContextType {
     /*persist: boolean,
     setPersist: React.Dispatch<React.SetStateAction<boolean>>;*/
 }
+
+export interface AccesTokenDecodedType {
+    user: {
+        email:string,
+        roles:number[]
+    }
+}
