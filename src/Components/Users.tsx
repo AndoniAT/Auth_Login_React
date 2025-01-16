@@ -19,9 +19,9 @@ const Users = () => {
                 const resp = await axiosPrivate.get('/api/users', {
                     signal: controller.signal
                 } );
-
+                const emails = resp.data.map( ( us:UserType ) => us.email );
                 if( isMounted ) {
-                    setUsers( resp.data );
+                    setUsers( emails );
                 }
 
             } catch( e:any ) {
@@ -50,7 +50,7 @@ const Users = () => {
             ?
                 (
                     <ul>
-                        { users.map( ( u:UserType, i:number ) => <li key={i}>{u?.email}</li>)}
+                        { users.map( ( u:string, i:number ) => <li key={i}>{u}</li>)}
                     </ul>
                 )
             :
