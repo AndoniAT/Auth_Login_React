@@ -70,3 +70,12 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }*/
+
+
+.error-message {
+  @apply text-red-800
+}
+
+.success-message {
+  @apply text-lime-500
+}

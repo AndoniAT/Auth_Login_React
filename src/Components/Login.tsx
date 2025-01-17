@@ -65,14 +65,12 @@ function LoginForm( ) {
             navigate( from, { replace: true } );
         } )
         .catch( err => {
+            const message = err.response.data.message ?? 'Login failed';
+
             if( !err.response ) {
                 setErrMsg( 'No server response' );
-            } else if ( err?.response?.status == 400 ) {
-                setErrMsg( 'Missing email or password')
-            } else if( err?.response?.status == 401 ) {
-                setErrMsg( 'Unauthorized' );
             } else {
-                setErrMsg( 'Login failed' );
+                setErrMsg( message );
             }
 
             errRef?.current?.focus();
@@ -93,7 +91,9 @@ function LoginForm( ) {
             <div className="w-full text-center">
                 <span className="text-2xl font-semibold whitespace-nowrap dark:text-white">LOGIN</span>
             </div>
-            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+            <div className="w-full text-center">
+                <p ref={errRef} className={errMsg ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg}</p>
+            </div>
             <div className="mb-5">
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
                 <input 
