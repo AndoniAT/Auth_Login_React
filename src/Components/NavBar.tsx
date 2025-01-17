@@ -9,7 +9,7 @@ const NavBar = () => {
 
     const signOut = async() => {
         await logout();
-        navigate( '/linkpage' );
+        navigate( '/' );
     };
 
     return (
@@ -21,7 +21,7 @@ const NavBar = () => {
                         <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Andoni ALONSO TORT</span>
                     </a>
                     {
-                        ( auth?.user ) ?
+                        ( auth?.accessToken ) ?
                         <div className="flex items-center space-x-6 rtl:space-x-reverse">
                             <p onClick={signOut} className="text-sm text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Logout</p>
                         </div>
