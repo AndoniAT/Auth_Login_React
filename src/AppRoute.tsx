@@ -7,6 +7,7 @@ import Home from "./components/Home";
 import Admin from "./components/Admin";
 import Unauthorized from "./components/Unauthorized";
 import PersistLogin from "./components/PersistLogin";
+import UserProfile from "./components/UserProfile";
 
 const ROLES = {
     admin: 1000,
@@ -27,7 +28,7 @@ const AppRoute = ( ) => {
                 { /* Protected routes*/ }
                 <Route element={<PersistLogin/>}>
                     <Route element={<RequireAuth allowedRoles={[ ROLES.user, ROLES.admin ]}/>}>
-                        <Route path="/profile" element={<>Profile</>}/>
+                        <Route path="/user/:id/profile" element={<UserProfile/>}/>
                     </Route>                
 
                     <Route element={<RequireAuth allowedRoles={[ ROLES.admin ]}/>}>

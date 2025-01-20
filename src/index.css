@@ -79,3 +79,13 @@ button:focus-visible {
 .success-message {
   @apply text-lime-500
 }
+
+.profileUserContainer {
+  animation-name: appearForm;
+  animation-duration: 1s;
+}
+
+@keyframes appearForm {
+  from { margin-left: -100%; }
+  to { margin-left: 0; }
+}
