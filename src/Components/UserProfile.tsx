@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { UserType } from "../interfaces/User";
 import { ChatBubbleBottomCenterTextIcon, PencilIcon, TrashIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { jwtDecode } from "jwt-decode";
+import { ROLES } from "../AppRoute";
+import { AccesTokenDecodedType } from "../interfaces/Auth";
 
 const UserProfile = () => {
     const { id } = useParams();
@@ -13,7 +16,12 @@ const UserProfile = () => {
     const [ user, setUser ] = useState<UserType|null>( null ); 
     const navigate = useNavigate();
 
-    console.log('connected user', auth.accessToken);
+    const [ isMe, setIsMe ] = useState( false );
+ 
+    const decoded = auth?.accessToken ? jwtDecode<AccesTokenDecodedType>( auth.accessToken ) : undefined;
+    const userConnected = decoded?.user;
+    const roles = userConnected ? userConnected.roles : [];
+    const isAdmin = roles.includes( ROLES.admin );
 
     useEffect( () => {
         const controller = new AbortController();
@@ -27,6 +35,10 @@ const UserProfile = () => {
 
                 if( isMounted ) {
                     setUser( data );
+
+                    if( data.email === userConnected?.email ) {
+                        setIsMe( true );
+                    }
                 }
             } catch( e:any ) {
                 if( e?.code == 'ERR_CANCELED' ) {
@@ -79,35 +91,48 @@ const UserProfile = () => {
                                 </label>
                             </div>
 
-                            <td className="px-6 py-4 flex justify-center;" style={ {justifyContent: 'center' }}>
-                                <Link to={`/user/${user?._id}/profile/edit`}
-                                    className="text-center justify-items-center p-2 cursor-pointer hover:scale-110 hover:bg-slate-200">
-                                    <PencilIcon className="size-6 mx-2"/>
-                                    <p>Modify User</p>
-                                </Link>
-                                <div className="justify-items-center p-2 cursor-pointer hover:scale-110 hover:bg-slate-200">
-                                    <TrashIcon onClick={ () => {} } className="size-6 text-red-500 mx-2"></TrashIcon>
-                                    <p>Delete User</p>
-                                </div>
-                            </td>
+                            {
+                                ( isMe || isAdmin ) ? 
+                                    <td className="px-6 py-4 flex justify-center;" style={ {justifyContent: 'center' }}>
+                                        <Link to={`/user/${user?._id}/profile/edit`}
+                                            className="text-center justify-items-center p-2 cursor-pointer hover:scale-110 hover:bg-slate-200">
+                                            <PencilIcon className="size-6 mx-2"/>
+                                            <p>Modify User</p>
+                                        </Link>
+                                        <div className="justify-items-center p-2 cursor-pointer hover:scale-110 hover:bg-slate-200">
+                                            <TrashIcon onClick={ () => {} } className="size-6 text-red-500 mx-2"></TrashIcon>
+                                            <p>Delete User</p>
+                                        </div>
+                                    </td>
+                                :
+                                <></>
+                            }
                         </div>
                         
                         }
                     </div>
 
-                    <div className="grid grid-rows-4 grid-flow-col gap-4 p-4">
-                        <div className="justify-items-center cursor-pointer hover:scale-110 hover:bg-slate-400 hover:rounded-md hover:p-2">
-                            <UserPlusIcon className="size-20 text-yellow-500 mx-2"/>
-                            <p className="dark:text-white">Add {user.firstname} to my network</p>
-                        </div>
-                    </div>
+                    {
+                        ( !isMe )
+                        ?
+                            <>
+                                <div className="grid grid-rows-4 grid-flow-col gap-4 p-4">
+                                    <div className="justify-items-center cursor-pointer hover:scale-110 hover:bg-slate-400 hover:rounded-md hover:p-2">
+                                        <UserPlusIcon className="size-20 text-yellow-500 mx-2"/>
+                                        <p className="dark:text-white">Add {user.firstname} to my network</p>
+                                    </div>
+                                </div>
 
-                    <div className="grid grid-rows-4 grid-flow-col gap-4 p-4">
-                        <div className="justify-items-center cursor-pointer hover:scale-110 hover:bg-slate-400 hover:rounded-md hover:p-2">
-                            <ChatBubbleBottomCenterTextIcon className="size-20 text-yellow-500 mx-2"/>
-                            <p className="dark:text-white">Start chat with {user.firstname}</p>
-                        </div>
-                    </div>
+                                <div className="grid grid-rows-4 grid-flow-col gap-4 p-4">
+                                    <div className="justify-items-center cursor-pointer hover:scale-110 hover:bg-slate-400 hover:rounded-md hover:p-2">
+                                        <ChatBubbleBottomCenterTextIcon className="size-20 text-yellow-500 mx-2"/>
+                                        <p className="dark:text-white">Start chat with {user.firstname}</p>
+                                    </div>
+                                </div>
+                            </>
+                        :
+                            <></>
+                    }
                     </>
                 :
                 <p>Loading...</p>

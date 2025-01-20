@@ -9,7 +9,7 @@ import Unauthorized from "./components/Unauthorized";
 import PersistLogin from "./components/PersistLogin";
 import UserProfile from "./components/UserProfile";
 
-const ROLES = {
+export const ROLES = {
     admin: 1000,
     user : 2000
 }
