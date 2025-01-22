@@ -1,7 +1,7 @@
 export interface UserType {
-    _id: string,
-    createdAt: string,
-    updatedAt: string,
+    _id?: string,
+    createdAt?: string,
+    updatedAt?: string,
     firstname: string,
     lastname: string,
     email: string,

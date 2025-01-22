@@ -15,8 +15,7 @@ const RequireAuth = ( { allowedRoles } : RolesType ) => {
     const roles = userConnected ? userConnected.roles : [];
 
     const hasRoleToAccess = roles?.find( ( role:number ) => allowedRoles?.includes( role ) );
-    console.log( 'user connected', userConnected );
-    console.log( 'has acces', hasRoleToAccess );
+
     return (
             userConnected
                 ? hasRoleToAccess

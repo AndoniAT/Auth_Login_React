@@ -71,7 +71,7 @@ function CreateAccount() {
             }
         }
         
-    }, [ countSuccess, startCountBack ] )
+    }, [ countSuccess, startCountBack ] );
 
     useEffect( () => {
         setErrMsg( prev => {
@@ -116,30 +116,32 @@ function CreateAccount() {
             }
 
             const { data } = err.response;
+            const { message } = data;
+
             setErrMsg( prev => {
                 return {
                     ...prev,
-                    firstname: data?.firstname?.message || prev.firstname,
-                    lastname: data?.lastname?.message || prev.lastname,
-                    email: data?.email?.message || prev.email,
-                    password: data?.password?.message || prev.password,
-                    confirmPassword: data?.confirmPassword?.message || prev.confirmPassword,
+                    firstname: message?.firstname?.message || prev.firstname,
+                    lastname: message?.lastname?.message || prev.lastname,
+                    email: message?.email?.message || prev.email,
+                    password: message?.password?.message || prev.password,
+                    confirmPassword: message?.confirmPassword?.message || prev.confirmPassword,
                 }
             } );
 
-            if( data.firstname ) {
+            if( message.firstname ) {
                 references.firstname.current?.focus();
-            } else if( data.lastname ) {
+            } else if( message.lastname ) {
                 references.lastname.current?.focus();
-            } else if( data.email ) {
+            } else if( message.email ) {
                 references.email.current?.focus();
-            } else if( data.password ) {
+            } else if( message.password ) {
                 references.password.current?.focus();
-            } else if( data.confirmPassword ) {
+            } else if( message.confirmPassword ) {
                 references.confirmPassword.current?.focus();
-            } else if( data.message ) {
+            } else {
                 setErrMsg( prev => {
-                    return { ...prev, gral: data.message };
+                    return { ...prev, gral: message };
                 } );
                 references.gralError?.current?.focus();
             }
