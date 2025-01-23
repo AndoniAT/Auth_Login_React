@@ -32,8 +32,8 @@ const Users = () => {
                     signal: controller.signal
                 } );
                 const users_response = resp.data.map( ( us:UserType ) => { 
-                    const { _id, email, firstname, lastname } = us;
-                    return { _id, email, firstname, lastname };
+                    const { _id, username, email, firstname, lastname } = us;
+                    return { _id, username, email, firstname, lastname };
                 } );
                 if( isMounted ) {
                     setUsers( users_response );
@@ -69,6 +69,9 @@ const Users = () => {
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" className="px-6 py-3">
+                                        Username
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
                                         Email
                                     </th>
                                     <th scope="col" className="px-6 py-3">
@@ -86,6 +89,9 @@ const Users = () => {
                                 { users.map( ( u:UserType ) => {
                                         return ( <tr key={u._id} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                                                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                        { u.username }
+                                                    </th>
+                                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                         { u.email }
                                                     </th>
                                                     <td className="px-6 py-4">
@@ -95,8 +101,8 @@ const Users = () => {
                                                         { u.lastname.toUpperCase() }
                                                     </td>
                                                     <td className="px-6 py-4 flex">
-                                                        <Link to={`/user/${u._id}/profile`}><PencilIcon className="size-6 mx-2 cursor-pointer hover:scale-125"/></Link>
-                                                        <TrashIcon onClick={ deleteUserHandler.bind( u._id ) } className="size-6 text-red-500 mx-2 cursor-pointer hover:scale-125"/>
+                                                        <Link to={`/user/${u.username}/profile`}><PencilIcon className="size-6 mx-2 cursor-pointer hover:scale-125"/></Link>
+                                                        <TrashIcon onClick={ u._id ? deleteUserHandler.bind( u._id ) : () => {} } className="size-6 text-red-500 mx-2 cursor-pointer hover:scale-125"/>
                                                     </td>
                                                 </tr> 
                                         )

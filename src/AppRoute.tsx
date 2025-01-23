@@ -17,29 +17,34 @@ export const ROLES = {
 const AppRoute = ( ) => {
     return (
         <Routes>
-            <Route path="/" element={<Layout/>} >
-                { /* Public */}
-                <Route index path="/" element={<Home/>}/>
-                <Route path="/about" element={<div>About</div>}/>
-                <Route path="/contact" element={<div>Contact</div>}/>
-                <Route path="/login" element={<LoginForm/>}/>
-                <Route path="/createAccount" element={<CreateAccount/>}/>
+            <Route element={<PersistLogin/>}>
+                <Route path="/" element={<Layout/>} >
+                    { /* Public */}
+                    <Route index path="/" element={<Home/>}/>
+                    <Route path="/about" element={<div>About</div>}/>
+                    <Route path="/contact" element={<div>Contact</div>}/>
 
-                { /* Protected routes*/ }
-                <Route element={<PersistLogin/>}>
-                    <Route element={<RequireAuth allowedRoles={[ ROLES.user, ROLES.admin ]}/>}>
-                        <Route path="/user/:id/profile" element={<UserProfile/>}/>
-                    </Route>                
 
-                    <Route element={<RequireAuth allowedRoles={[ ROLES.admin ]}/>}>
-                        <Route path="/admin" element={<Admin/>}/>
-                    </Route>                
+
+                    { /* Protected routes*/ }
+                        <Route element={<RequireAuth allowedRoles={[]} authRequired={false}/>}>
+                            <Route path="/login" element={<LoginForm/>}/>
+                            <Route path="/createAccount" element={<CreateAccount/>}/>
+                        </Route>
+
+                        <Route element={<RequireAuth allowedRoles={[ ROLES.user, ROLES.admin ]}/>}>
+                            <Route path="/user/:id/profile" element={<UserProfile/>}/>
+                        </Route>      
+
+                        <Route element={<RequireAuth allowedRoles={[ ROLES.admin ]}/>}>
+                            <Route path="/admin" element={<Admin/>}/>
+                        </Route>
+
+                    <Route path="/unauthorized" element={<Unauthorized/>}/>
+
+                    { /* Catch all */}
+                    <Route path="*" element={<>Not Found</>}/>
                 </Route>
-
-                <Route path="/unauthorized" element={<Unauthorized/>}/>
-
-                { /* Catch all */}
-                <Route path="*" element={<>Not Found</>}/>
             </Route>
             </Routes>
     )

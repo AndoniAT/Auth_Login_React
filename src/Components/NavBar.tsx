@@ -1,16 +1,31 @@
 import { Link, useNavigate } from "react-router-dom"
 import useAuth from "../hooks/useAuth";
 import useLogout from "../hooks/useLogout";
+import { UserCircleIcon } from "@heroicons/react/24/solid";
+import { jwtDecode } from "jwt-decode";
+import { AccesTokenDecodedType } from "../interfaces/Auth";
+import { ROLES } from "../AppRoute";
 
 const NavBar = () => {
     const { auth } = useAuth();
     const logout = useLogout();
     const navigate = useNavigate();
 
+    const decoded = auth?.accessToken ? jwtDecode<AccesTokenDecodedType>( auth.accessToken ) : undefined;
+    const userConnected = decoded?.user;
+
     const signOut = async() => {
         await logout();
         navigate( '/' );
     };
+
+    const goToProfileHandler = async() => {
+        if( userConnected ) {
+            navigate( `/user/${userConnected.username}/profile` )
+        }
+    }
+
+    console.log("check connection", userConnected);
 
     return (
         <>
@@ -21,10 +36,15 @@ const NavBar = () => {
                         <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Andoni ALONSO TORT</span>
                     </a>
                     {
-                        ( auth?.accessToken ) ?
-                        <div className="flex items-center space-x-6 rtl:space-x-reverse">
-                            <p onClick={signOut} className="text-sm text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Logout</p>
-                        </div>
+                        ( userConnected ) ?
+                        <>
+                            <div className="flex items-center space-x-6 rtl:space-x-reverse">
+                                <p onClick={signOut} className="text-sm text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Logout</p>
+                                <UserCircleIcon
+                                    onClick={goToProfileHandler}
+                                    className="size-10 text-slate-500 mx-2 cursor-pointer hover:scale-110"/>
+                            </div>
+                        </>
                         :
                         <div className="flex items-center space-x-6 rtl:space-x-reverse">
                             <Link to='/login' className="text-sm  text-blue-600 dark:text-blue-500 hover:underline">Login</Link>
@@ -46,6 +66,15 @@ const NavBar = () => {
                             <li>
                                 <Link to='/contact' className="text-gray-900 dark:text-white hover:underline">Contact</Link>
                             </li>
+                            {
+                                userConnected?.roles.includes( ROLES.admin ) ?
+                                    <li>
+                                        <Link to='/admin' className="text-gray-900 dark:text-white hover:underline">Admin Page</Link>
+                                    </li>
+                                :
+                                    <></>
+
+                            }
                         </ul>
                     </div>
                 </div>

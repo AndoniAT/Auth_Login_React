@@ -19,6 +19,7 @@ const UserProfile = () => {
     const logout = useLogout();
 
     // Local storage inputs
+    const [ username, usernameReset, usernameAttr ] = useInput( 'firstname', 'ando' );
     const [ firstname, firstnameReset, firstnameAttr ] = useInput( 'firstname', 'ando' );
     const [ lastname, lastnameReset, lastnameAttr ] = useInput( 'lastname', '' );
     const [ email, emailReset, emailAttr ] = useInput( 'email', '' );
@@ -37,6 +38,7 @@ const UserProfile = () => {
 
     const inputs = useMemo( () => {
         return {
+            username: { value: username, reset: usernameReset, attr: usernameAttr },
             firstname: { value: firstname, reset: firstnameReset, attr: firstnameAttr },
             lastname: { value: lastname, reset: lastnameReset, attr: lastnameAttr },
             email: { value: email, reset: emailReset, attr: emailAttr },
@@ -45,6 +47,7 @@ const UserProfile = () => {
             confirmPassword: { value: confirmPassword, reset: setConfirmPassword, attr: null }
         }
      }, [ email, emailAttr, emailReset,
+          username, usernameAttr, usernameReset,
           firstname, firstnameAttr, firstnameReset,
           lastname, lastnameAttr, lastnameReset,
           roles, rolesAttr, rolesReset,
@@ -62,6 +65,7 @@ const UserProfile = () => {
     const references = {
         success: useRef<HTMLDivElement>( null ),
         gralError: useRef<HTMLDivElement>( null ),
+        username: useRef<HTMLInputElement>( null ),
         firstname: useRef<HTMLInputElement>( null ),
         lastname: useRef<HTMLInputElement>( null ),
         email: useRef<HTMLInputElement>( null ),
@@ -72,6 +76,7 @@ const UserProfile = () => {
     // Handling errors
     const [ errMsg, setErrMsg ] = useState( {
         gral: '',
+        username: '',
         firstname: '',
         lastname: '',
         email: '',
@@ -97,6 +102,7 @@ const UserProfile = () => {
          setErrMsg( prev => {
             return {
                 ...prev,
+                username: message?.username?.message || prev.username,
                 firstname: message?.firstname?.message || prev.firstname,
                 lastname: message?.lastname?.message || prev.lastname,
                 email: message?.email?.message || prev.email,
@@ -105,7 +111,9 @@ const UserProfile = () => {
             }
         } );
 
-        if( message.firstname ) {
+        if( message.username ) {
+            references.username.current?.focus();
+        } else if( message.firstname ) {
             references.firstname.current?.focus();
         } else if( message.lastname ) {
             references.lastname.current?.focus();
@@ -145,14 +153,15 @@ const UserProfile = () => {
             } )
             .then( ( res:any ) => {
                 if( isMounted ) {
-                    const { firstname, lastname, email, roles } = res.data;
+                    const { username, firstname, lastname, email, roles } = res.data;
 
+                    inputs.username.reset( username );
                     inputs.firstname.reset( firstname );
                     inputs.lastname.reset( lastname );
                     inputs.email.reset( email );
                     inputs.roles.reset( roles );
 
-                    setDefaultUser( { firstname, lastname, email, roles } );
+                    setDefaultUser( { username, firstname, lastname, email, roles } );
 
                     if( email === connectedUser?.info?.email ) {
                         setIsMe( true );
@@ -181,9 +190,9 @@ const UserProfile = () => {
 
     useEffect( () => {
         setErrMsg( prev => {
-            return { ...prev, gral: '', firstname: '', lastname: '', email: '', password: '', confirmPassword: '' };
+            return { ...prev, gral: '', username: '', firstname: '', lastname: '', email: '', password: '', confirmPassword: '' };
         } );
-    }, [ inputs.firstname.value, inputs.lastname.value, setErrMsg ] );
+    }, [ inputs.username.value, inputs.firstname.value, inputs.lastname.value, setErrMsg ] );
 
     const successFinishMsg = 'Some sensitive user information have changed. You will be redirected to login page in... ';
 
@@ -214,6 +223,7 @@ const UserProfile = () => {
     // => Save
     const handlerSave = () => {
         const user = {
+            username: inputs.username.value,
             firstname: inputs.firstname.value,
             lastname: inputs.lastname.value,
             email: inputs.email.value,
@@ -233,10 +243,17 @@ const UserProfile = () => {
 
                 const isMyProfile = ( connectedUser.info?.email === defaultUser?.email );
                 const emailHasChanged = defaultUser && ( user.email != defaultUser?.email );
+                const usernameHasChanged = defaultUser && ( user.username != defaultUser?.username );
                 const rightsChanged = !( defaultUser?.roles.every( r => user.roles.includes( r ) ) && user.roles.every( r => defaultUser.roles.includes( r ) ) );
 
-                if( isMyProfile && ( emailHasChanged || rightsChanged ) ) {
-                    setNeedToReconnect( true );
+                const criticChange = ( usernameHasChanged || emailHasChanged || rightsChanged );
+                if( criticChange ) {
+                    if( isMyProfile ) {
+                        setNeedToReconnect( true );
+                    } else if( usernameHasChanged ){
+                        navigate( `/user/${user.username}/profile` );
+                    }
+
                 }
 
                 setDefaultUser( user );
@@ -253,6 +270,7 @@ const UserProfile = () => {
     // => Cancel
     const handlerCancel = () => {
         if( defaultUser ) {
+            inputs.username.reset( defaultUser.username );
             inputs.firstname.reset( defaultUser.firstname );
             inputs.lastname.reset( defaultUser.lastname );
             inputs.email.reset( defaultUser.email );
@@ -283,6 +301,26 @@ const UserProfile = () => {
                         {
                             <div className="profileInfoContainter bg-slate-300 rounded-lg border-black h-fit w-8/12 mx-auto p-2 h-5/6">
                                 <div className="">
+                                    <label htmlFor="username" className="">Username :</label>
+                                    {
+                                        editMode
+                                        ?
+                                            <>
+                                                <input type="text"
+                                                    placeholder="Your name"
+                                                    ref={references.username}
+                                                    {...inputs.username.attr}
+                                                    className="rounded-lg border-zinc-400 border-2 w-full"/>
+                                                <p className={errMsg.username ? "errmsg error-message" : "offscreen"} aria-live="assertive">
+                                                    {errMsg.username}
+                                                </p>
+                                            </>
+                                        :
+                                            <p className="bg-slate-400">
+                                                {inputs.username.value}
+                                            </p>
+                                    }
+                                    <br />
                                     <label htmlFor="fistname" className="">Firstname :</label>
                                     {
                                         editMode
@@ -293,10 +331,14 @@ const UserProfile = () => {
                                                     ref={references.firstname}
                                                     {...inputs.firstname.attr}
                                                     className="rounded-lg border-zinc-400 border-2 w-full"/>
-                                                <p className={errMsg.firstname ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.firstname}</p>
+                                                <p className={errMsg.firstname ? "errmsg error-message" : "offscreen"} aria-live="assertive">
+                                                    {errMsg.firstname}
+                                                </p>
                                             </>
                                         :
-                                            <p className="bg-slate-400">{inputs.firstname.value}</p>
+                                            <p className="bg-slate-400">
+                                                {inputs.firstname.value}
+                                            </p>
                                     }
                                     <br />
                                     <label htmlFor="lastname" className="mt-2">Lastname :</label>
@@ -309,10 +351,14 @@ const UserProfile = () => {
                                                     ref={references.lastname}
                                                     {...inputs.lastname.attr}
                                                     className="rounded-lg border-zinc-400 border-2 w-full"/>
-                                                <p className={errMsg.lastname ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.lastname}</p>
+                                                <p className={errMsg.lastname ? "errmsg error-message" : "offscreen"} aria-live="assertive">
+                                                    {errMsg.lastname}
+                                                </p>
                                             </>
                                         :
-                                            <p className="bg-slate-400">{inputs.lastname.value}</p>
+                                            <p className="bg-slate-400">
+                                                {inputs.lastname.value}
+                                            </p>
                                     }
                                     <br />
                                     <p className="mt-2">Email :</p>
@@ -325,10 +371,14 @@ const UserProfile = () => {
                                                     ref={references.email}
                                                     {...inputs.email.attr}
                                                     className="rounded-lg border-zinc-400 border-2 w-full"/>
-                                                <p className={errMsg.email ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.email}</p>
+                                                <p className={errMsg.email ? "errmsg error-message" : "offscreen"} aria-live="assertive">
+                                                    {errMsg.email}
+                                                </p>
                                             </>
                                         :
-                                            <p className="bg-slate-400">{inputs.email.value}</p>
+                                            <p className="bg-slate-400">
+                                                {inputs.email.value}
+                                            </p>
                                     }
                                     <br />
                                     {
@@ -355,7 +405,9 @@ const UserProfile = () => {
                                                     </div>
 
                                                 </div>
-                                                <p className={errMsg.password ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.password}</p>
+                                                <p className={errMsg.password ? "errmsg error-message" : "offscreen"} aria-live="assertive">
+                                                    {errMsg.password}
+                                                </p>
                                                 <br />
                                                 <p className="mt-2">Confirm Password :</p>
                                                 <div className="flex">
@@ -377,7 +429,9 @@ const UserProfile = () => {
                                                         }
                                                     </div>
                                                 </div>
-                                                <p className={errMsg.confirmPassword ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.confirmPassword}</p>
+                                                <p className={errMsg.confirmPassword ? "errmsg error-message" : "offscreen"} aria-live="assertive">
+                                                    {errMsg.confirmPassword}
+                                                </p>
                                                 <br />
                                             </>
                                         : <></>
@@ -455,14 +509,14 @@ const UserProfile = () => {
                                 <div className="grid grid-rows-4 grid-flow-col gap-4 p-4">
                                     <div className="justify-items-center cursor-pointer hover:scale-110 hover:bg-slate-400 hover:rounded-md hover:p-2">
                                         <UserPlusIcon className="size-20 text-yellow-500 mx-2"/>
-                                        <p className="dark:text-white">Add {defaultUser?.firstname} to my network</p>
+                                        <p className="dark:text-white">Add {defaultUser?.username} to my network</p>
                                     </div>
                                 </div>
 
                                 <div className="grid grid-rows-4 grid-flow-col gap-4 p-4">
                                     <div className="justify-items-center cursor-pointer hover:scale-110 hover:bg-slate-400 hover:rounded-md hover:p-2">
                                         <ChatBubbleBottomCenterTextIcon className="size-20 text-yellow-500 mx-2"/>
-                                        <p className="dark:text-white">Start chat with {defaultUser?.firstname}</p>
+                                        <p className="dark:text-white">Start chat with {defaultUser?.username}</p>
                                     </div>
                                 </div>
                             </>

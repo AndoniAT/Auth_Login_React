@@ -5,9 +5,13 @@ const Layout = () => {
     return (
         <>
             <NavBar/>
-            {/* Anything nested in the Layout component is
-            represented by the Outlet.
-            We use this for the routes in AppRoute.tsx */}
+            {
+             /*
+                Anything nested in the Layout component is
+                represented by the Outlet.
+                We use this for the routes in AppRoute.tsx
+             */
+            }
             <Outlet/>
         </>
     )

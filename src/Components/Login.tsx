@@ -16,39 +16,27 @@ function LoginForm( ) {
     const location = useLocation();
     const from = location.state?.from?.pathname || '/'; // Go where the user wanted to go before to be in login page
 
-    const emailRef = useRef<HTMLInputElement>( null );
+    const usernameRef = useRef<HTMLInputElement>( null );
     const errRef = useRef<HTMLInputElement>( null );
 
-    const [ email, resetEmail, emailAttr ] = useInput( 'email', '' );
+    const [ username, resetUsername, usernameAttr ] = useInput( 'username', '' );
     const [ pwd, setPwd ] = useState( '' );
     const [ errMsg, setErrMsg ] = useState( '' );
     const [ check, toogleCheck ] = useToogle( 'persist', false );
 
     useEffect( () => {
-            emailRef?.current?.focus();
+            usernameRef?.current?.focus();
     }, [] );
 
     useEffect( () => {
         setErrMsg( '' );
-    }, [ email, pwd ] );
+    }, [ username, pwd ] );
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        /*const form = e.currentTarget;
-        const formElements = form.elements as typeof form.elements & LoginInterface
-
-        const {
-            email,
-            password
-        } = formElements;
 
         const user = {
-            email: email.value,
-            password: password.value
-        };*/
-        
-        const user = {
-            email,
+            username,
             password: pwd
         };
 
@@ -59,9 +47,9 @@ function LoginForm( ) {
         .then( res => {
             const { data } = res;
             const { accessToken } = data;
-            setAuth( { user: email, accessToken } );
+            setAuth( { user: username, accessToken } );
             setPwd( '' );
-            resetEmail();
+            resetUsername();
             navigate( from, { replace: true } );
         } )
         .catch( err => {
@@ -95,11 +83,14 @@ function LoginForm( ) {
                 <p ref={errRef} className={errMsg ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg}</p>
             </div>
             <div className="mb-5">
-                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Your username
+                </label>
                 <input 
-                    ref={emailRef}
-                    {...emailAttr}
-                    type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="email@example.com" required
+                    ref={usernameRef}
+                    {...usernameAttr}
+                    type="text" id="username" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="usernameExample" required
                 />
             </div>
             <div className="mb-5">
