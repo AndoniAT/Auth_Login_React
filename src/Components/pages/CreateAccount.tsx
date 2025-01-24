@@ -11,6 +11,7 @@ function CreateAccount() {
 
     const [ errMsg, setErrMsg ] = useState( {
         gral: '', 
+        username: '', 
         firstname: '', 
         lastname: '', 
         email: '',
@@ -22,6 +23,7 @@ function CreateAccount() {
     const references = {
         success: useRef<HTMLDivElement>( null ),
         gralError: useRef<HTMLDivElement>( null ),
+        username: useRef<HTMLInputElement>( null ),
         firstname: useRef<HTMLInputElement>( null ),
         lastname: useRef<HTMLInputElement>( null ),
         email: useRef<HTMLInputElement>( null ),
@@ -30,6 +32,7 @@ function CreateAccount() {
     };
 
     // useInput (localstorage)
+    const [ username, resetUsername, usernameAttr ] = useInput( 'username', '' );
     const [ firstname, resetFirstname, firstnameAttr ] = useInput( 'firstname', '' );
     const [ lastname, resetLastname, lastnameAttr ] = useInput( 'lastname', '' );
     const [ email, resetEmail, emailAttr ] = useInput( 'email', '' );
@@ -39,6 +42,7 @@ function CreateAccount() {
     const [ confirmPassword, setConfirmPassword ] = useState( '' );
 
     const inputs = {
+        username: { value : username, reset: resetUsername, attr: usernameAttr },
         firstname: { value : firstname, reset: resetFirstname, attr: firstnameAttr },
         lastname: { value: lastname, reset: resetLastname, attr: lastnameAttr },
         email: { value: email, reset: resetEmail, attr: emailAttr }
@@ -47,7 +51,7 @@ function CreateAccount() {
     const successFinishMsg = 'User created, you will be redirected to login page in... ';
 
     useEffect( () => {
-        references.firstname?.current?.focus();
+        references.username?.current?.focus();
     }, [] );
 
     
@@ -83,21 +87,22 @@ function CreateAccount() {
 
     useEffect( () => {
         setErrMsg( prev => {
-            return { ...prev, gral: '', firstname: '', lastname: '', email: '' };
+            return { ...prev, gral: '', username:'', firstname: '', lastname: '', email: '' };
         } );
-    }, [ firstname, lastname, email ] );
+    }, [ username, firstname, lastname, email ] );
 
     const createUser = ( e:React.FormEvent<HTMLFormElement> ) => {
         e.preventDefault();
 
         const new_user = {
+            username,
             firstname,
             lastname,
             email,
             password,
             confirmPassword
         };
-
+        console.log("Create new user", new_user);
         axios.post( '/api/users', new_user, {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true 
@@ -106,6 +111,7 @@ function CreateAccount() {
             setStartCountBack( true );
         } ) 
         .catch( err => {
+            console.error(err);
             if( !err.response ) {
                return setErrMsg( prev => {
                     return {
@@ -121,6 +127,7 @@ function CreateAccount() {
             setErrMsg( prev => {
                 return {
                     ...prev,
+                    username: message?.username?.message || prev.username,
                     firstname: message?.firstname?.message || prev.firstname,
                     lastname: message?.lastname?.message || prev.lastname,
                     email: message?.email?.message || prev.email,
@@ -129,7 +136,9 @@ function CreateAccount() {
                 }
             } );
 
-            if( message.firstname ) {
+            if( message.username ) {
+                references.username.current?.focus();
+            } else if( message.firstname ) {
                 references.firstname.current?.focus();
             } else if( message.lastname ) {
                 references.lastname.current?.focus();
@@ -158,6 +167,19 @@ function CreateAccount() {
             </div>
             <div tabIndex={-1} className="w-full text-center mb-3" ref={references.gralError}>
                 <p className={errMsg.gral ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.gral}</p>
+            </div>
+            <div className="mb-5">
+                <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Your Username
+                </label>
+                <input 
+                    ref={references.username}
+                    {...inputs.username.attr}
+                    type="username"
+                    id="username"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Firstname" required />
+                <p className={errMsg.username ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.username}</p>
             </div>
             <div className="mb-5">
                 <label htmlFor="firstname" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
