@@ -65,7 +65,11 @@ const Users = () => {
             ?
                 (
                     <div className="w-9/12 my-0 mx-auto relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <table className={`
+                                w-full text-sm text-left rtl:text-right text-gray-500
+                                border-3 border-slate-400
+                                dark:text-gray-400 dark:border-0`
+                            }>
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" className="px-6 py-3">

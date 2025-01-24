@@ -287,7 +287,7 @@ const UserProfile = () => {
                 /* Profile form / information section */
                 loaded ?
                     <>
-                    <div className="profileUserContainer bg-slate-300 w-5/12 min-h-fit h-screen p-y-10 block">
+                    <div className="profileUserContainer bg-slate-300 w-full lg:w-5/12 min-h-fit h-screen p-y-10 block">
                         <h3 className="text-center text-2xl pt-5 pb-5 font-bold">Profile</h3>
                         {
                             editMode
