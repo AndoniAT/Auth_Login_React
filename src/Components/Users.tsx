@@ -1,15 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { UserType } from "../interfaces/User";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { TrashIcon, PencilIcon } from '@heroicons/react/24/solid';
+import ApiErrorHandler from "../apiErrorHandler";
 
 const Users = () => {
-    const [ users, setUsers ] = useState([]);
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const location = useLocation();
 
+    // States
+    const [ users, setUsers ] = useState([]);
+    const [ errMsg, setErrMsg ] = useState( '' );
+
+    // References
+    const errRef = useRef<HTMLInputElement>( null );
+
+    // Handlers
     const deleteUserHandler = async function( this:string ) {
         const id = this;
         
@@ -17,8 +25,11 @@ const Users = () => {
             await axiosPrivate.delete( `/api/users/${id}` );
             const us = users.filter( ( u:UserType ) => u._id !== id );
             setUsers( us );
-        } catch( e ) {
-            console.error( e );
+            setErrMsg( '' );
+        } catch( e:any ) {
+            const error = ApiErrorHandler.getMessageError( e );
+            setErrMsg( error );
+            errRef?.current?.focus();
         }
     };
 
@@ -61,6 +72,9 @@ const Users = () => {
     return (
         <article>
             <h2 className="text-center text-lg">Users List</h2>
+            <div className="w-full text-center">
+                <p ref={errRef} className={errMsg ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg}</p>
+            </div>
             { users.length > 0
             ?
                 (
