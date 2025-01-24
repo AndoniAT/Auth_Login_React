@@ -8,11 +8,11 @@ Implementing authentication in React with JWT received from server.
 
 A front-end application built with React, designed to provide an intuitive and modern interface for user and role management. It includes:
 
-✅ An intuitive user interface for login and user profile management.
-✅ Role management with specific views and permissions based on user authorizations.
-✅ Integration with a secure REST API, developed in Node.js, for all authentication and user management operations. Communications use JWTs (JSON Web Tokens) to ensure secure exchanges.
-✅ Support for conditional navigation with protected routes based on user login status and roles.
-✅ An optimized user experience thanks to modern libraries like React Router and Axios.
+- ✅ An intuitive user interface for login and user profile management.
+- ✅ Role management with specific views and permissions based on user authorizations.
+- ✅ Integration with a secure REST API, developed in Node.js, for all authentication and user management operations. Communications use JWTs (JSON Web Tokens) to ensure secure exchanges.
+- ✅ Support for conditional navigation with protected routes based on user login status and roles.
+- ✅ An optimized user experience thanks to modern libraries like React Router and Axios.
 
 This front-end is designed to interact with the [authentication JWT Node.js back-end proejct](https://github.com/AndoniAT/Auth_JWT_NodeJs). Offering a solid and secure foundation for applications requiring advanced user management.
 
