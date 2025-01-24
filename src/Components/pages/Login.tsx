@@ -1,9 +1,9 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import axios from '../api/axios';
-import AuthContext from "../context/AuthProvider";
+import axios from '../../api/axios';
+import AuthContext from "../../context/AuthProvider";
 import { useContext, useEffect, useRef, useState } from "react";
-import useInput from "../hooks/useInput";
-import useToogle from "../hooks/useToogle";
+import useInput from "../../hooks/useInput";
+import useToogle from "../../hooks/useToogle";
 
 /*interface LoginInterface {
     email: HTMLInputElement,

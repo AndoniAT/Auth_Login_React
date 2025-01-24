@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useInput from "../hooks/useInput";
-import axios from "../api/axios";
+import useInput from "../../hooks/useInput";
+import axios from "../../api/axios";
 
 function CreateAccount() {
     const navigate = useNavigate();

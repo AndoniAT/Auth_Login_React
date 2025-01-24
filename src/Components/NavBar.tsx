@@ -5,6 +5,8 @@ import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { jwtDecode } from "jwt-decode";
 import { AccesTokenDecodedType } from "../interfaces/Auth";
 import { ROLES } from "../AppRoute";
+import * as _heroui_aria_utils from '@heroui/aria-utils';
+import MyTooltip from "./elements/MyTooltip";
 
 const NavBar = () => {
     const { auth } = useAuth();
@@ -33,18 +35,22 @@ const NavBar = () => {
                 <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
                     <a href="https://flowbite.com" className="flex items-center space-x-3 rtl:space-x-reverse">
                         <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
-                        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Andoni ALONSO TORT</span>
+                        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+                            Created by Andoni ALONSO TORT
+                        </span>
                     </a>
                     {
                         ( userConnected ) ?
-                        <>
                             <div className="flex items-center space-x-6 rtl:space-x-reverse">
-                                <p onClick={signOut} className="text-sm text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Logout</p>
-                                <UserCircleIcon
-                                    onClick={goToProfileHandler}
-                                    className="size-10 text-slate-500 mx-2 cursor-pointer hover:scale-110"/>
+                                <p onClick={signOut} className="text-sm text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">
+                                    Logout
+                                </p>
+                                <MyTooltip content={'Profile'} position={'botton-start' as _heroui_aria_utils.OverlayPlacement}>
+                                        <UserCircleIcon
+                                            onClick={goToProfileHandler}
+                                            className="size-10 text-slate-500 mx-2 cursor-pointer hover:scale-110"/>
+                                </MyTooltip>
                             </div>
-                        </>
                         :
                         <div className="flex items-center space-x-6 rtl:space-x-reverse">
                             <Link to='/login' className="text-sm  text-blue-600 dark:text-blue-500 hover:underline">Login</Link>

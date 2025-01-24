@@ -1,9 +1,21 @@
-# Auth_Login_React
+<h1 class="text-center" style="background-color: rgb(226 232 240 / var(--tw-bg-opacity, 1));
+ padding: 5px;"> Authentication JWT Login in React
+ <img src="./src/assets/react.svg"/>
+ </h1>
 <h4>Author : Andoni ALONSO TORT</h4>
 
 Implementing authentication in React with JWT received from server.
 
-For this project we are intrecact with the [authentication jwt project](git@github.com:AndoniAT/Auth_Login_React.git) in node js from my github.
+A front-end application built with React, designed to provide an intuitive and modern interface for user and role management. It includes:
+
+✅ An intuitive user interface for login and user profile management.
+✅ Role management with specific views and permissions based on user authorizations.
+✅ Integration with a secure REST API, developed in Node.js, for all authentication and user management operations. Communications use JWTs (JSON Web Tokens) to ensure secure exchanges.
+✅ Support for conditional navigation with protected routes based on user login status and roles.
+✅ An optimized user experience thanks to modern libraries like React Router and Axios.
+
+This front-end is designed to interact with the [authentication JWT Node.js back-end proejct](https://github.com/AndoniAT/Auth_JWT_NodeJs). Offering a solid and secure foundation for applications requiring advanced user management.
+
 
 Project created with :
 > npm create vite@latest
@@ -17,14 +29,31 @@ To run project :
 
 <hr/>
 
-Other dependencies installed :
-<ul>
-  <li>axios: For API requests</li>
-  <li>@fvilers/disable-react-devtools : To disable react devtools in browser</li>
-  <li>jwt-decode : To decode accesToken received from Backend</li>
-</ul>
+### Dependencies
 
-# React + TypeScript + Vite
+
+Other dependencies installed :
+  - axios: For API requests
+  - @fvilers/disable-react-devtools : To disable react devtools in browser
+  - jwt-decode : To decode accesToken received from Backend
+  - clsx : Fot conditional clasnames
+  - [heroui](https://www.heroui.com/docs/components): Some dependencies for styles
+
+For styles see :
+  - [Flowbite](https://www.heroui.com/
+  docs/components)
+  - [Tailwind](https://tailwindcss.com/docs)
+  - [Heroui](https://www.heroui.com/docs/components)
+
+To init tailwind in project :
+> npm install -D tailwindcss postcss autoprefixer
+
+> npx tailwindcss init -p
+
+See [tailwind documentation](https://tailwindcss.com/docs/guides/vite) to see how to install tailwind with vite.
+
+
+### React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
@@ -77,16 +106,6 @@ export default tseslint.config({
 <hr/>
 
 # Other project details
-
-This project uses Tailwind for styles.
-
-> npm install -D tailwindcss postcss autoprefixer
-
-> npx tailwindcss init -p
-
-See [tailwind documentation](https://tailwindcss.com/docs/guides/vite) to see how to install tailwind with vite.
-
-
 
 <h6>== USER ROLES ==</h6>
 

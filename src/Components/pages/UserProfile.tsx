@@ -1,15 +1,15 @@
 import { useNavigate, useParams } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 import { useEffect, useMemo, useRef, useState } from "react";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import { UserType } from "../interfaces/User";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { UserType } from "../../interfaces/User";
 import { ChatBubbleBottomCenterTextIcon, EyeIcon, EyeSlashIcon, PencilIcon, TrashIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import { jwtDecode } from "jwt-decode";
-import { ROLES } from "../AppRoute";
-import { AccesTokenDecodedType } from "../interfaces/Auth";
-import useInput from "../hooks/useInput";
-import ReconnectModal from "./Modals/ReconnectModal";
-import useLogout from "../hooks/useLogout";
+import { ROLES } from "../../AppRoute";
+import { AccesTokenDecodedType } from "../../interfaces/Auth";
+import useInput from "../../hooks/useInput";
+import ReconnectModal from "../modals/ReconnectModal";
+import useLogout from "../../hooks/useLogout";
 
 const UserProfile = () => {
     const { id } = useParams();
@@ -282,12 +282,12 @@ const UserProfile = () => {
     };
 
     return (
-        <div className="bg-slate-600 flex">
+        <div className="bg-slate-400 flex">
             {
                 /* Profile form / information section */
                 loaded ?
                     <>
-                    <div className="profileUserContainer bg-slate-400 w-5/12 min-h-fit h-screen p-y-10 block">
+                    <div className="profileUserContainer bg-slate-300 w-5/12 min-h-fit h-screen p-y-10 block">
                         <h3 className="text-center text-2xl pt-5 pb-5 font-bold">Profile</h3>
                         {
                             editMode
