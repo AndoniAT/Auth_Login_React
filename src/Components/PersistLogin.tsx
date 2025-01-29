@@ -1,21 +1,32 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import useRefreshToken from '../hooks/useRefreshToken';
 import useAuth from '../hooks/useAuth';
 import useLocalStorage from '../hooks/useLocalStorage';
+import useLogout from '../hooks/useLogout';
+import { s } from 'framer-motion/client';
 
 const PersistLogin = () => {
     const [ isLoading, setIsLoading ] = useState( true );
     const refresh = useRefreshToken();
     const { auth } = useAuth();
     const [ persist ] = useLocalStorage( 'persist', false );
+    const logout = useLogout();
+
+    const signOut = async() => {
+        await logout();
+    };
 
     useEffect( () => {
         let isMounted = true;
 
         const verifyRefreshToken = async() => {
             try {
-                await refresh();
+                if( persist ) {
+                    await refresh();
+                } else {
+                    signOut();
+                }
             } catch( e ) {
                 console.error( e );
             } finally {
@@ -25,7 +36,11 @@ const PersistLogin = () => {
         }
 
         if( !auth?.accessToken ) {
-            verifyRefreshToken();
+            if( persist ) {
+                verifyRefreshToken();
+            } else {
+                signOut()
+            }
         } else {
             setIsLoading( false );
         }

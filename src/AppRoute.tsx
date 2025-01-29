@@ -20,36 +20,44 @@ const AppRoute = ( ) => {
     return (
         <div>
             <Routes>
+                { /* Public */}
                 <Route element={<PersistLogin/>}>
                     <Route path="/" element={<Layout/>} >
-                        { /* Public */}
                         <Route index path="/" element={<Home/>}/>
                         <Route path="/about" element={<About/>}/>
                         <Route path="/contact" element={<Contact/>}/>
+                    </Route>
 
-                        { /* Protected routes*/ }
-                            <Route element={<RequireAuth allowedRoles={[]} authRequired={false}/>}>
-                                <Route path="/login" element={<LoginForm/>}/>
-                                <Route path="/createAccount" element={<CreateAccount/>}/>
-                            </Route>
+                    { /* Protected routes*/ }
+                    <Route path="/" element={<Layout/>} >
+                        <Route element={<RequireAuth allowedRoles={[]} authRequired={false} pages={['/login', '/createAccount']}/>}>
+                            <Route path="/login" element={<LoginForm/>}/>
+                            <Route path="/createAccount" element={<CreateAccount/>}/>
+                        </Route>
 
-                            <Route element={<RequireAuth allowedRoles={[ ROLES.user, ROLES.admin ]}/>}>
-                                <Route path="/user/:id/profile" element={<UserProfile/>}/>
-                            </Route>      
+                        <Route element={<RequireAuth allowedRoles={[ ROLES.user, ROLES.admin ]}/>}>
+                            <Route path="/user/:id/profile" element={<UserProfile/>}/>
+                        </Route>
 
-                            <Route element={<RequireAuth allowedRoles={[ ROLES.admin ]}/>}>
-                                <Route path="/admin" element={<Admin/>}/>
-                            </Route>
+                        <Route element={<RequireAuth allowedRoles={[ ROLES.admin ]}/>}>
+                            <Route path="/admin" element={<Admin/>}/>
+                        </Route>
 
                         <Route path="/unauthorized" element={<Unauthorized/>}/>
-
-                        { /* Catch all */}
-                        <Route path="*" element={<>Not Found</>}/>
                     </Route>
+
+
+                    { /* Catch all */}
+                    <Route path="*" element={<>Not Found</>}/>
                 </Route>
             </Routes>
         </div>
     )
 }
+
+/**
+ * <Route path="/" element={<Layout/>} >
+ * <Route element={<PersistLogin/>}>
+ */
 
 export default AppRoute;

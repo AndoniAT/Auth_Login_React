@@ -11,7 +11,7 @@ import useToogle from "../../hooks/useToogle";
 };*/
 
 function LoginForm( ) {
-    const { setAuth } = useContext( AuthContext );
+    const { auth, setAuth } = useContext( AuthContext );
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/'; // Go where the user wanted to go before to be in login page
@@ -25,7 +25,7 @@ function LoginForm( ) {
     const [ check, toogleCheck ] = useToogle( 'persist', false );
 
     useEffect( () => {
-            usernameRef?.current?.focus();
+        usernameRef?.current?.focus();
     }, [] );
 
     useEffect( () => {
@@ -50,6 +50,7 @@ function LoginForm( ) {
             setAuth( { user: username, accessToken } );
             setPwd( '' );
             resetUsername();
+
             navigate( from, { replace: true } );
         } )
         .catch( err => {

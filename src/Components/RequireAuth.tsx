@@ -5,10 +5,12 @@ import { AccesTokenDecodedType } from "../interfaces/Auth";
 
 interface RequireAuthTypes {
     allowedRoles: number[],
-    authRequired?: boolean
+    authRequired?: boolean,
+    pages?: string[]
 }
 
-const RequireAuth = ( { allowedRoles, authRequired = true } : RequireAuthTypes ) => {
+const RequireAuth = ( { allowedRoles, authRequired = true, pages = [] } : RequireAuthTypes ) => {
+
     const { auth } = useAuth();
     const location = useLocation();
     const decoded = auth?.accessToken ? jwtDecode<AccesTokenDecodedType>( auth.accessToken ) : undefined;
@@ -17,10 +19,16 @@ const RequireAuth = ( { allowedRoles, authRequired = true } : RequireAuthTypes )
 
     const hasRoleToAccess = ( allowedRoles.length > 0 ) ? roles?.find( ( role:number ) => allowedRoles?.includes( role ) ) : true;
 
+    const from = location.state?.from?.pathname ?? '/';
+
     return (
-            !authRequired
+            ( !authRequired )
                 ?
-                    userConnected ? <Navigate to="/" replace /> : <Outlet/>
+                    ( userConnected )
+                    ?
+                        <Navigate to={pages.includes( from ) ? '/' : from } replace />
+                    :
+                        <Outlet/>
             :
                 ( userConnected  )
                 ?
