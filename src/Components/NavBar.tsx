@@ -47,11 +47,16 @@ const NavBar = () => {
                                 <p onClick={signOut} className="text-sm text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">
                                     Logout
                                 </p>
-                                <MyTooltip content={"Profile"} position={"botton-start" as _heroui_aria_utils.OverlayPlacement}>
-                                    <UserCircleIcon
-                                        onClick={goToProfileHandler}
-                                        className="size-10 text-slate-500 mx-2 cursor-pointer hover:scale-110"/>
-                                </MyTooltip>
+                                <div className="hover:scale-110 cursor-pointer"
+                                    onClick={goToProfileHandler}>
+                                    <MyTooltip content={"Profile"} position={"botton-start" as _heroui_aria_utils.OverlayPlacement}>
+                                        <div className="flex items-center">
+                                            <UserCircleIcon
+                                                className="size-10 text-slate-500 mx-2 hover:scale-110"/>
+                                            <p>{userConnected.username}</p>
+                                        </div>
+                                    </MyTooltip>
+                                </div>
                             </div>
                             :
                             <div className="flex items-center space-x-6 rtl:space-x-reverse">
