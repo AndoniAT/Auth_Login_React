@@ -1,0 +1,21 @@
+.admin-container .users-container #users-table {
+    @apply  
+        w-full text-sm text-left rtl:text-right text-gray-500
+        border-3 border-slate-400
+        rounded-lg
+        overflow-hidden
+}
+
+.admin-container .users-container #users-table tr {
+    @apply w-full
+}
+
+.admin-container .users-container #users-table thead {
+    @apply bg-slate-500 text-slate-300
+}
+
+.admin-container .users-container #users-table tbody tr {
+    @apply 
+        odd:bg-slate-300
+        even:bg-slate-200
+}

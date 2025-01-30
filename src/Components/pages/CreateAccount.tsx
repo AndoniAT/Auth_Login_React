@@ -1,3 +1,4 @@
+import "../../styles/Login.css";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useInput from "../../hooks/useInput";
@@ -160,15 +161,15 @@ function CreateAccount() {
     return (
         <form
             onSubmit={createUser}
-            className="max-w-md mx-auto mt-14 border-2 border-slate-400 p-10 rounded-lg bg-slate-200 dark:bg-gray-900">
+            className={"loginContainer"}>
             <div className="w-full text-center mb-3">
-                <span className="text-2xl font-semibold whitespace-nowrap dark:text-white">CREATE ACCOUNT</span>
+                <span className="text-2xl font-semibold whitespace-nowrap">CREATE ACCOUNT</span>
             </div>
             <div tabIndex={-1} className="w-full text-center mb-3" ref={references.gralError}>
                 <p className={errMsg.gral ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.gral}</p>
             </div>
             <div className="mb-5">
-                <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label htmlFor="username" className="block mb-2 text-sm font-medium">
                     Your Username
                 </label>
                 <input
@@ -176,12 +177,12 @@ function CreateAccount() {
                     {...inputs.username.attr}
                     type="username"
                     id="username"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Firstname" required />
+                    className={""}
+                    placeholder="Username" required />
                 <p className={errMsg.username ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.username}</p>
             </div>
             <div className="mb-5">
-                <label htmlFor="firstname" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label htmlFor="firstname" className="block mb-2 text-sm font-medium">
                     Your Firstname
                 </label>
                 <input
@@ -189,12 +190,12 @@ function CreateAccount() {
                     {...inputs.firstname.attr}
                     type="firstname"
                     id="firstname"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className={""}
                     placeholder="Firstname" required />
                 <p className={errMsg.firstname ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.firstname}</p>
             </div>
             <div className="mb-5">
-                <label htmlFor="lastname" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label htmlFor="lastname" className="block mb-2 text-sm font-medium">
                     Your Lastname
                 </label>
                 <input
@@ -202,12 +203,12 @@ function CreateAccount() {
                     {...inputs.lastname.attr}
                     type="lastname"
                     id="lastname"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Lastname" required />
                 <p className={errMsg.lastname ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.lastname}</p>
             </div>
             <div className="mb-5">
-                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label htmlFor="email" className="block mb-2 text-sm font-medium">
                     Your email
                 </label>
                 <input
@@ -215,28 +216,28 @@ function CreateAccount() {
                     {...inputs.email.attr}
                     type="email"
                     id="email"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="email@example.com" required />
                 <p className={errMsg.email ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.email}</p>
             </div>
             <div className="mb-5">
-                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
+                <label htmlFor="password" className="block mb-2 text-sm font-medium">Your password</label>
                 <input
                     ref={references.password}
                     value={password}
                     onChange={ e => setPassword( e.currentTarget.value ) }
-                    type="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                    type="password" id="password" className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                 <p className={errMsg.password ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.password}</p>
             </div>
             <div className="mb-5">
-                <label htmlFor="repeat-assword" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label htmlFor="repeat-assword" className="block mb-2 text-sm font-medium">
                     Repeat password
                 </label>
                 <input
                     ref={references.confirmPassword}
                     value={confirmPassword}
                     onChange={ e => setConfirmPassword( e.currentTarget.value ) }
-                    type="password" id="repeat-password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                    type="password" id="repeat-password" className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                 <p className={errMsg.confirmPassword ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.confirmPassword}</p>
             </div>
             <div className="flex items-start mb-5">

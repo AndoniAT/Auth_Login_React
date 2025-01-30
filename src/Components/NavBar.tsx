@@ -32,7 +32,7 @@ const NavBar = () => {
     };
 
     return (
-        <>
+        <div className="fixed w-full top-0 z-50">
             <nav className="navbar">
                 <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
                     <a href="https://flowbite.com" className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -87,7 +87,7 @@ const NavBar = () => {
                     </div>
                 </div>
             </nav>
-        </>
+        </div>
     );
 };
 

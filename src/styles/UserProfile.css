@@ -1,6 +1,11 @@
 .profileUserContainer {
     justify-content: center;
-    @apply flex bg-slate-300 w-full lg:w-5/12 min-h-fit py-10 dark:text-slate-800
+    @apply
+    flex bg-slate-300 w-full lg:w-5/12 min-h-fit py-10
+}
+
+.profileUserContainer label {
+    @apply block mb-2 text-sm font-medium dark:text-slate-800
 }
 
 .profileUserContainer input {
@@ -28,4 +33,25 @@
     animation-duration: 1s;
     @apply h-dvh
   }
+
+.profileUserContainer input {
+    @apply bg-gray-50 
+    border border-gray-500 text-sm
+    focus:ring-blue-500 focus:border-blue-500
+    block w-full p-2.5 
+    /* dark */
+    dark:bg-gray-400 dark:border-gray-300
+    dark:text-slate-800
+    dark:focus:ring-blue-500 dark:focus:border-blue-500
+    dark:placeholder:text-slate-600
+}
+
+.profileUserContainer input:disabled {
+    @apply text-slate-500 dark:text-slate-700
+}
+
+.profileUserContainer input[type="checkbox"] {
+    @apply w-7 h-7
+  }
+  
   

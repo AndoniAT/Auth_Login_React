@@ -1,3 +1,4 @@
+import "../../styles/Login.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import AuthContext from "../../context/AuthProvider";
@@ -74,31 +75,31 @@ function LoginForm( ) {
     }, [ persist ] );*/
 
     return (
-        <form className="max-w-md mx-auto mt-14 border-2 border-slate-400 p-10 rounded-lg bg-slate-200 dark:bg-gray-900"
+        <form className={"loginContainer"}
             onSubmit={onSubmit}>
             <div className="w-full text-center">
-                <span className="text-2xl font-semibold whitespace-nowrap dark:text-white">LOGIN</span>
+                <span className="text-2xl font-semibold whitespace-nowrap">LOGIN</span>
             </div>
             <div className="w-full text-center">
                 <p ref={errRef} className={errMsg ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg}</p>
             </div>
             <div className="mb-5">
-                <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label htmlFor="username" className="block mb-2 text-sm font-medium">
                     Your username
                 </label>
                 <input
                     ref={usernameRef}
                     {...usernameAttr}
-                    type="text" id="username" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    type="text" id="username" className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="usernameExample" required
                 />
             </div>
             <div className="mb-5">
-                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
+                <label htmlFor="password" className="block mb-2 text-sm font-medium">Your password</label>
                 <input
                     value={pwd}
                     onChange={ e => setPwd( e.currentTarget.value ) }
-                    type="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    type="password" id="password" className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required />
             </div>
             <div className="flex items-start mb-5">
@@ -108,7 +109,7 @@ function LoginForm( ) {
                         onChange={toogleCheck}
                         checked={check}/>
                 </div>
-                <label htmlFor="persist" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                <label htmlFor="persist" className="ms-2 text-sm font-medium">
                     Trust this device
                 </label>
             </div>

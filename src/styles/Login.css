@@ -1,0 +1,21 @@
+
+.loginContainer {
+    @apply 
+        border-slate-400
+        max-w-md mx-auto mt-14 border-2 
+        p-10 rounded-lg mb-10
+        dark:bg-slate-300
+        dark:text-slate-800
+}
+
+.loginContainer input {
+    @apply bg-gray-50 
+    border border-gray-500 text-sm
+    rounded-lg focus:ring-blue-500 focus:border-blue-500
+    block w-full p-2.5 
+    /* dark */
+    dark:bg-gray-400 dark:border-gray-300
+    dark:text-slate-800
+    dark:focus:ring-blue-500 dark:focus:border-blue-500
+    dark:placeholder:text-slate-600
+}

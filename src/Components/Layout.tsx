@@ -12,7 +12,9 @@ const Layout = () => {
                 We use this for the routes in AppRoute.tsx
              */
             }
-            <Outlet/>
+            <div className="pt-28 max-h-screen overflow-y-auto">
+                <Outlet/>
+            </div>
         </>
     );
 };

@@ -70,7 +70,7 @@ const Users = () => {
     }, [] );
 
     return (
-        <article>
+        <article className="users-container">
             <h2 className="text-center text-lg">Users List</h2>
             <div className="w-full text-center">
                 <p ref={errRef} className={errMsg ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg}</p>
@@ -78,13 +78,11 @@ const Users = () => {
             { users.length > 0
                 ?
                 (
-                    <div className="w-9/12 my-0 mx-auto relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table className={`
-                                w-full text-sm text-left rtl:text-right text-gray-500
-                                border-3 border-slate-400
-                                dark:text-gray-400 dark:border-0`
-                        }>
-                            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <div className="w-9/12 my-0 mx-auto relative overflow-x-auto shadow-md sm:rounded-lg bg-slate-500">
+                        <table
+                            id="users-table"
+                            className={""}>
+                            <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">
                                 <tr>
                                     <th scope="col" className="px-6 py-3">
                                         Username
@@ -93,7 +91,7 @@ const Users = () => {
                                         Email
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        Fistname
+                                        Firstname
                                     </th>
                                     <th scope="col" className="px-6 py-3">
                                         Lastname
@@ -105,11 +103,11 @@ const Users = () => {
                             </thead>
                             <tbody>
                                 { users.map( ( u:UserType ) => {
-                                    return ( <tr key={u._id} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    return ( <tr key={u._id} className="border-b">
+                                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                             { u.username }
                                         </th>
-                                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                             { u.email }
                                         </th>
                                         <td className="px-6 py-4">
