@@ -5,8 +5,8 @@ interface AuthProviderProps {
     children: ReactNode;
 }
 
-const AuthContext = createContext<AuthContextType>( { 
-    auth: {}, 
+const AuthContext = createContext<AuthContextType>( {
+    auth: {},
     setAuth: () => {},
     /*persist: false,
     setPersist: () => false*/
@@ -21,6 +21,6 @@ export const AuthProvider = ( { children } : AuthProviderProps ) => {
         <AuthContext.Provider value={ { auth, setAuth } }>
             {children}
         </AuthContext.Provider>
-    )
-}
-export default AuthContext; 
+    );
+};
+export default AuthContext;

@@ -46,13 +46,13 @@ interface InputsValueType {
     confirmPassword?: string;
 }
 
-interface ConnectedUserType { 
+interface ConnectedUserType {
     info: {
         username: string;
         email: string;
         roles: number[];
-    } | undefined; 
-    isAdmin: boolean | never[]; 
+    } | undefined;
+    isAdmin: boolean | never[];
 }
 
 interface VerifyCriticalChangesHookType  {

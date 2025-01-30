@@ -4,9 +4,9 @@ import { AuthType } from "../interfaces/Auth";
 
 const useRefreshToken = () => {
     const { setAuth } = useAuth();
-    
+
     const refresh = async() => {
-        const response = await axios.get( '/api/auth/token', {
+        const response = await axios.get( "/api/auth/token", {
             withCredentials: true
         } );
 
@@ -15,11 +15,11 @@ const useRefreshToken = () => {
             return {
                 ...prev,
                 accessToken: response.data.accessToken
-            }
+            };
         } );
         return response.data.accessToken;
-    }
-    return refresh
-}
+    };
+    return refresh;
+};
 
 export default useRefreshToken;

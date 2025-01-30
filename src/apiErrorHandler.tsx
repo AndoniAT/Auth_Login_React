@@ -1,5 +1,5 @@
 class ApiErrorHandler {
-    
+
     /**
      * Return the error message received from the API
      * @param {e:any}
@@ -11,16 +11,16 @@ class ApiErrorHandler {
         if( message ) {
             return message;
         }
-        
+
         if( response?.status && response?.statusText ) {
-            return response?.status + ' : ' + response?.statusText;
+            return response?.status + " : " + response?.statusText;
         }
 
         if( response ) {
             return JSON.stringify( response );
         }
 
-        return 'No server response';
+        return "No server response";
 
     }
 }

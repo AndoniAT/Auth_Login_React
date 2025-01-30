@@ -1,15 +1,15 @@
-import { Outlet } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import useRefreshToken from '../hooks/useRefreshToken';
-import useAuth from '../hooks/useAuth';
-import useLocalStorage from '../hooks/useLocalStorage';
-import useLogout from '../hooks/useLogout';
+import { Outlet } from "react-router-dom";
+import { useState, useEffect } from "react";
+import useRefreshToken from "../hooks/useRefreshToken";
+import useAuth from "../hooks/useAuth";
+import useLocalStorage from "../hooks/useLocalStorage";
+import useLogout from "../hooks/useLogout";
 
 const PersistLogin = () => {
     const [ isLoading, setIsLoading ] = useState( true );
     const refresh = useRefreshToken();
     const { auth } = useAuth();
-    const [ persist ] = useLocalStorage( 'persist', false );
+    const [ persist ] = useLocalStorage( "persist", false );
     const logout = useLogout();
 
     const signOut = async() => {
@@ -32,13 +32,13 @@ const PersistLogin = () => {
                 if( isMounted )
                     setIsLoading( false );
             }
-        }
+        };
 
         if( !auth?.accessToken ) {
             if( persist ) {
                 verifyRefreshToken();
             } else {
-                signOut()
+                signOut();
             }
         } else {
             setIsLoading( false );
@@ -46,12 +46,12 @@ const PersistLogin = () => {
 
         return () => {
             isMounted = false;
-        }
+        };
     }, [] );
 
     useEffect( () => {
-        console.log( 'Is loading state : ', isLoading );
-    },  [ isLoading ])
+        console.log( "Is loading state : ", isLoading );
+    },  [ isLoading ] );
 
     return (
         <>
@@ -59,17 +59,17 @@ const PersistLogin = () => {
                 !persist
                     ? <Outlet/>
                     :
-                        isLoading ?
+                    isLoading ?
 
-                            /*
+                    /*
                             <p>Loading...</p>
                             */
-                            <></>
+                        <></>
                         :
                         <Outlet/>
             }
         </>
-    )
-}
+    );
+};
 
 export default PersistLogin;

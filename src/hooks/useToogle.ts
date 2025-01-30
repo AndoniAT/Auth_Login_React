@@ -5,7 +5,7 @@ const useToogle = ( key:string, initValue:any ) => {
 
     const toogle = ( val:any ) => {
         setValue( ( prev:any ) => {
-            return typeof val === 'boolean' ? val : !prev;
+            return typeof val === "boolean" ? val : !prev;
         } );
     };
 

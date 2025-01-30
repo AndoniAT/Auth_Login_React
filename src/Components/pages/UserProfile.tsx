@@ -3,7 +3,7 @@ import { UserType } from "../../interfaces/User";
 import { ChatBubbleBottomCenterTextIcon, EyeIcon, EyeSlashIcon, PencilIcon, TrashIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import { ROLES } from "../../AppRoute";
 import { AxiosInstance } from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useConnectedUser, useCreateInputs, useCreateReferences, useGetUserProfile, useHandlerError, useVerifyCritialChanges } from "../../hooks/packages/UserProfileHooks";
 import { useEffect, useState } from "react";
 import { Card } from "@heroui/card";
@@ -18,7 +18,6 @@ const updateUser = async ( id:string, _axiosPrivate:AxiosInstance, data:UserType
 const UserProfile = () => {
 
     const { id } = useParams();
-    const navigate = useNavigate();
     const axiosPrivate = useAxiosPrivate();
     const connectedUser = useConnectedUser(); // JWT => Session info
     const [ defaultUser, setDefaultUser ] = useGetUserProfile();

@@ -1,4 +1,4 @@
-import Users from "../Users"; 
+import Users from "../Users";
 
 const Admin = () => {
     return (
@@ -8,7 +8,7 @@ const Admin = () => {
             <Users />
             <br />
         </section>
-    )
-}
+    );
+};
 
 export default Admin;

@@ -19,7 +19,7 @@ const ReconnectModal = ( { header, message } : { header:string, message:string }
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default ReconnectModal;

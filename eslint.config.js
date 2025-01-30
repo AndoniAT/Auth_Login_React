@@ -26,24 +26,25 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
       'indent': [
-                'error',
-                4
-            ],
-            'linebreak-style': [
-                'error',
-                'unix'
-            ],
-            'quotes': [
-                'error',
-                'double'
-            ],
-            'semi': [
-                'error',
-                'always'
-            ],
-            'space-in-parens': [
-                'error', 'always'
-            ]
+        'error',
+        4
+      ],
+      'linebreak-style': [
+        'error',
+        'unix'
+      ],
+      'quotes': [
+        'error',
+        'double'
+      ],
+      'semi': [
+        'error',
+        'always'
+      ],
+      'space-in-parens': [
+        'error', 'always'
+      ],
+      'no-trailing-spaces': 'error',
     },
   },
 )

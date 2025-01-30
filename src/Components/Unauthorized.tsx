@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 const Unauthorized = ( ) => {
     const navigate = useNavigate();
@@ -14,7 +14,7 @@ const Unauthorized = ( ) => {
                 <button onClick={goBack}>Go Back</button>
             </div>
         </section>
-    )
-}
+    );
+};
 
 export default Unauthorized;

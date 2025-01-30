@@ -1,4 +1,4 @@
-import './styles/UserProfile.css';
+import "./styles/UserProfile.css";
 import { Route, Routes } from "react-router-dom";
 import LoginForm from "./components/pages/Login";
 import CreateAccount from "./components/pages/CreateAccount";
@@ -12,13 +12,12 @@ import About from "./components/pages/About";
 import Contact from "./components/pages/Contact";
 import SuspenseComp from "./components/SuspenseComp";
 import { lazy } from "react";
-import reactLogo from './assets/react.svg'
 import UserProfileSkeleton from "./skeletons/UserProfileSkeletons";
 
 export const ROLES = {
     admin: 1000,
     user : 2000
-}
+};
 
 const AppRoute = ( ) => {
     const UserProfile = lazy( () => import( "./components/pages/UserProfile" ) );;
@@ -36,7 +35,7 @@ const AppRoute = ( ) => {
 
                     { /* Protected routes*/ }
                     <Route path="/" element={<Layout/>} >
-                        <Route element={<RequireAuth allowedRoles={[]} authRequired={false} pages={['/login', '/createAccount']}/>}>
+                        <Route element={<RequireAuth allowedRoles={[]} authRequired={false} pages={[ "/login", "/createAccount" ]}/>}>
                             <Route path="/login" element={<LoginForm/>}/>
                             <Route path="/createAccount" element={<CreateAccount/>}/>
                         </Route>
@@ -60,8 +59,8 @@ const AppRoute = ( ) => {
                 </Route>
             </Routes>
         </div>
-    )
-}
+    );
+};
 
 /**
  * <Route path="/" element={<Layout/>} >

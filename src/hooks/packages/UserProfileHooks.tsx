@@ -2,7 +2,7 @@
  * Author: Andoni ALONSO TORT
  */
 
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../useAuth";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { UserType } from "../../interfaces/User";
@@ -42,13 +42,13 @@ const getUser = async ( id:any, _axiosPrivate:AxiosInstance, controller:AbortCon
 
 // == Init values ==
 const errorMessagesInit = {
-    gral: '',
-    username: '',
-    firstname: '',
-    lastname: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+    gral: "",
+    username: "",
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
 } as ErrorMessagesType;
 
 
@@ -119,7 +119,7 @@ export function useHandlerError( references: FormReferencesType ) : ErrorHandler
             setErrMsg( prev => {
                 return {
                     ...prev,
-                    gral: 'No server response'
+                    gral: "No server response"
                 };
             } );
             return;
@@ -192,15 +192,15 @@ export function useVerifyCritialChanges() : VerifyCriticalChangesHookType {
     }, [ countSuccess, needToReconnect ] );
 
     const verifyCriticalChanges = ( connectedUser: ConnectedUserType, defaultUser: UserType | null, user: UserType ) => {
-    
+
         const isMyProfile = ( connectedUser.info?.email === defaultUser?.email );
         const emailHasChanged = defaultUser && ( user.email != defaultUser?.email );
         const usernameHasChanged = defaultUser && ( user.username != defaultUser?.username );
         const rightsChanged = !( defaultUser?.roles.every( r => user.roles.includes( r ) ) && user.roles.every( r => defaultUser.roles.includes( r ) ) );
-    
+
         const criticChange = ( usernameHasChanged || emailHasChanged || rightsChanged );
         if( !criticChange ) return;
-        
+
         // == CRITIC CHANGE ==
 
         if( isMyProfile ) {
@@ -235,7 +235,7 @@ export function useCreateReferences() {
         email: useRef( null ),
         password: useRef( null ),
         confirmPassword: useRef( null ),
-    }
+    };
 
     const findFocus = function( msg:Record<string, any> ) {
         const attributes:ReferencesKeysType[] = Object.keys( references ) as ReferencesKeysType[];
@@ -243,7 +243,7 @@ export function useCreateReferences() {
         let found = false;
         for( const attr of attributes ) {
             found = msg[ attr ];
-            
+
             if( found ) {
                 references[ attr ]?.current?.focus();
                 break;
@@ -255,7 +255,7 @@ export function useCreateReferences() {
         }
 
         return !!found;
-    }
+    };
 
 
     const refs:FormReferencesType = {

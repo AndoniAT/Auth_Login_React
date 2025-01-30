@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import axios from '../../api/axios';
+import axios from "../../api/axios";
 import AuthContext from "../../context/AuthProvider";
 import { useContext, useEffect, useRef, useState } from "react";
 import useInput from "../../hooks/useInput";
@@ -11,58 +11,58 @@ import useToogle from "../../hooks/useToogle";
 };*/
 
 function LoginForm( ) {
-    const { auth, setAuth } = useContext( AuthContext );
+    const { setAuth } = useContext( AuthContext );
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/"; // Go where the user wanted to go before to be in login page
     const usernameRef = useRef<HTMLInputElement>( null );
     const errRef = useRef<HTMLInputElement>( null );
 
-    const [ username, resetUsername, usernameAttr ] = useInput( 'username', '' );
-    const [ pwd, setPwd ] = useState( '' );
-    const [ errMsg, setErrMsg ] = useState( '' );
-    const [ check, toogleCheck ] = useToogle( 'persist', false );
+    const [ username, resetUsername, usernameAttr ] = useInput( "username", "" );
+    const [ pwd, setPwd ] = useState( "" );
+    const [ errMsg, setErrMsg ] = useState( "" );
+    const [ check, toogleCheck ] = useToogle( "persist", false );
 
     useEffect( () => {
         usernameRef?.current?.focus();
     }, [] );
 
     useEffect( () => {
-        setErrMsg( '' );
+        setErrMsg( "" );
     }, [ username, pwd ] );
 
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+    const onSubmit = ( e: React.FormEvent<HTMLFormElement> ) => {
+        e.preventDefault();
 
         const user = {
             username,
             password: pwd
         };
 
-        axios.post( '/api/auth/login', user, { 
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true 
+        axios.post( "/api/auth/login", user, {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true
         } )
-        .then( res => {
-            const { data } = res;
-            const { accessToken } = data;
-            setAuth( { user: username, accessToken } );
-            setPwd( '' );
-            resetUsername();
+            .then( res => {
+                const { data } = res;
+                const { accessToken } = data;
+                setAuth( { user: username, accessToken } );
+                setPwd( "" );
+                resetUsername();
 
-            navigate( from, { replace: true } );
-        } )
-        .catch( err => {
-            const message = err.response.data.message ?? 'Login failed';
+                navigate( from, { replace: true } );
+            } )
+            .catch( err => {
+                const message = err.response.data.message ?? "Login failed";
 
-            if( !err.response ) {
-                setErrMsg( 'No server response' );
-            } else {
-                setErrMsg( message );
-            }
+                if( !err.response ) {
+                    setErrMsg( "No server response" );
+                } else {
+                    setErrMsg( message );
+                }
 
-            errRef?.current?.focus();
-        } );
+                errRef?.current?.focus();
+            } );
     };
 
     /*const togglePersist = () => {
@@ -75,7 +75,7 @@ function LoginForm( ) {
 
     return (
         <form className="max-w-md mx-auto mt-14 border-2 border-slate-400 p-10 rounded-lg bg-slate-200 dark:bg-gray-900"
-        onSubmit={onSubmit}>
+            onSubmit={onSubmit}>
             <div className="w-full text-center">
                 <span className="text-2xl font-semibold whitespace-nowrap dark:text-white">LOGIN</span>
             </div>
@@ -86,7 +86,7 @@ function LoginForm( ) {
                 <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Your username
                 </label>
-                <input 
+                <input
                     ref={usernameRef}
                     {...usernameAttr}
                     type="text" id="username" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -95,7 +95,7 @@ function LoginForm( ) {
             </div>
             <div className="mb-5">
                 <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-                <input 
+                <input
                     value={pwd}
                     onChange={ e => setPwd( e.currentTarget.value ) }
                     type="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -103,8 +103,8 @@ function LoginForm( ) {
             </div>
             <div className="flex items-start mb-5">
                 <div className="flex items-center h-5">
-                <input id="persist" type="checkbox" value="" 
-                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" 
+                    <input id="persist" type="checkbox" value=""
+                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
                         onChange={toogleCheck}
                         checked={check}/>
                 </div>

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const getLocalValue = ( key:string, initValue:any ) => {
     // Server side react => like next.js
-    if( typeof window ===  'undefined' ) {
+    if( typeof window ===  "undefined" ) {
         return initValue;
     }
 
@@ -30,6 +30,6 @@ const useLocalStorage = ( key:string, initValue:any ) => {
     }, [ key, value ] );
 
     return [ value, setValue ];
-}
+};
 
 export default useLocalStorage;

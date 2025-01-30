@@ -7,15 +7,15 @@ const useLogout = () => {
     const logout = async () => {
         setAuth( {} );
         try {
-            await axios( '/api/auth/logout',  {
+            await axios( "/api/auth/logout",  {
                 withCredentials: true
             } );
         } catch( e ) {
             console.error( e );
         }
-    }
+    };
 
     return logout;
-}
+};
 
 export default useLogout;

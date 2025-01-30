@@ -1,5 +1,5 @@
 import { Tooltip } from "@heroui/tooltip";
-import * as _heroui_aria_utils from '@heroui/aria-utils';
+import * as _heroui_aria_utils from "@heroui/aria-utils";
 
 interface TooltipProps extends React.AllHTMLAttributes<TooltipProps> {
     content: string;
@@ -10,7 +10,7 @@ interface TooltipProps extends React.AllHTMLAttributes<TooltipProps> {
 }
 
 export default function MyTooltip( {
-    content, 
+    content,
     position = "top",
     offset,
     crossOffset, children, className
@@ -25,7 +25,7 @@ export default function MyTooltip( {
             border border-2 border-white
             bg-black text-white
             ${className}
-            `} 
+            `}
             offset={offs}
             content={content}
             showArrow={true}
@@ -35,5 +35,5 @@ export default function MyTooltip( {
                 { children }
             </div>
         </Tooltip>
-      );
+    );
 }
