@@ -157,7 +157,6 @@ export function useHandlerError( references: FormReferencesType ) : ErrorHandler
  * and logout if needed
  */
 export function useVerifyCritialChanges() : VerifyCriticalChangesHookType {
-    //const navigate = useNavigate();
     const [ needToReconnect, setNeedToReconnect ] = useState( "" );
     const navigate = useNavigate();
     const logout = useLogout();
@@ -239,7 +238,7 @@ export function useCreateReferences() {
 
     const findFocus = function( msg:Record<string, any> ) {
         const attributes:ReferencesKeysType[] = Object.keys( references ) as ReferencesKeysType[];
-
+        ( document.activeElement as HTMLElement )?.blur();
         let found = false;
         for( const attr of attributes ) {
             found = msg[ attr ];

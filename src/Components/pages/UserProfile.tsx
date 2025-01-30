@@ -3,21 +3,31 @@ import { UserType } from "../../interfaces/User";
 import { ChatBubbleBottomCenterTextIcon, EyeIcon, EyeSlashIcon, PencilIcon, TrashIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import { ROLES } from "../../AppRoute";
 import { AxiosInstance } from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useConnectedUser, useCreateInputs, useCreateReferences, useGetUserProfile, useHandlerError, useVerifyCritialChanges } from "../../hooks/packages/UserProfileHooks";
 import { useEffect, useState } from "react";
 import { Card } from "@heroui/card";
+import ApiErrorHandler from "../../apiErrorHandler";
+import useLogout from "../../hooks/useLogout";
 
-const updateUser = async ( id:string, _axiosPrivate:AxiosInstance, data:UserType ) => {
+const updateUser = ( id:string, _axiosPrivate:AxiosInstance, data:UserType ) => {
     return _axiosPrivate.put( `/api/users/${id}`, data, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true
     } );
 };
 
+// Handlers
+const deleteUser = function( id:string, _axiosPrivate:AxiosInstance ) {
+    return _axiosPrivate.delete( `/api/users/${id}` );
+};
+
 const UserProfile = () => {
 
     const { id } = useParams();
+    const navigate = useNavigate();
+    const logout = useLogout();
+
     const axiosPrivate = useAxiosPrivate();
     const connectedUser = useConnectedUser(); // JWT => Session info
     const [ defaultUser, setDefaultUser ] = useGetUserProfile();
@@ -76,6 +86,39 @@ const UserProfile = () => {
 
     };
 
+    // => Delete
+    const handleDelete = () => {
+        if( !id ) return;
+
+        deleteUser( id, axiosPrivate )
+            .then( () => {
+                if( isMe ) {
+                    logout().then( () => {
+                        navigate( "/login", { state: { from: { pathname : "/" } }, replace: true } );
+                    } );
+                } else {
+                    const goBack = () => navigate( -1 );
+                    goBack();
+                }
+            } )
+            .catch( ( e:Error ) => {
+                const error = ApiErrorHandler.getMessageError( e );
+                setErrMsg( ( prev ) => {
+                    return {
+                        ...prev,
+                        gral: error
+                    };
+                } );
+
+                setTimeout( ()=>{
+                    if ( references?.gralError?.current ) {
+                        ( document.activeElement as HTMLElement )?.blur();
+                        references.gralError.current.focus();
+                    }
+                }, 0 );
+            } );
+    };
+
     // => Cancel
     const handlerCancel = () => {
         if( defaultUser ) {
@@ -114,7 +157,7 @@ const UserProfile = () => {
                                                     ref={references.username}
                                                     {...inputs.username.attr}
                                                     disabled={!editMode}/>
-                                                <p className={errMsg.username ? "errmsg error-message" : "offscreen"} aria-live="assertive">
+                                                <p tabIndex={-1} className={errMsg.username ? "errmsg error-message" : "offscreen"} aria-live="assertive">
                                                     {errMsg.username}
                                                 </p>
                                             </>
@@ -129,7 +172,7 @@ const UserProfile = () => {
                                                     {...inputs.firstname.attr}
                                                     disabled={!editMode}
                                                 />
-                                                <p className={errMsg.firstname ? "errmsg error-message" : "offscreen"} aria-live="assertive">
+                                                <p tabIndex={-1} className={errMsg.firstname ? "errmsg error-message" : "offscreen"} aria-live="assertive">
                                                     {errMsg.firstname}
                                                 </p>
                                             </>
@@ -143,7 +186,7 @@ const UserProfile = () => {
                                                     ref={references.lastname}
                                                     {...inputs.lastname.attr}
                                                     disabled={!editMode}/>
-                                                <p className={errMsg.lastname ? "errmsg error-message" : "offscreen"} aria-live="assertive">
+                                                <p tabIndex={-1} className={errMsg.lastname ? "errmsg error-message" : "offscreen"} aria-live="assertive">
                                                     {errMsg.lastname}
                                                 </p>
                                             </>
@@ -157,7 +200,7 @@ const UserProfile = () => {
                                                     ref={references.email}
                                                     {...inputs.email.attr}
                                                     disabled={!editMode}/>
-                                                <p className={errMsg.email ? "errmsg error-message" : "offscreen"} aria-live="assertive">
+                                                <p tabIndex={-1} className={errMsg.email ? "errmsg error-message" : "offscreen"} aria-live="assertive">
                                                     {errMsg.email}
                                                 </p>
                                             </>
@@ -187,7 +230,7 @@ const UserProfile = () => {
                                                         </div>
 
                                                     </div>
-                                                    <p className={errMsg.password ? "errmsg error-message" : "offscreen"} aria-live="assertive">
+                                                    <p tabIndex={-1} className={errMsg.password ? "errmsg error-message" : "offscreen"} aria-live="assertive">
                                                         {errMsg.password}
                                                     </p>
                                                     <br />
@@ -211,7 +254,7 @@ const UserProfile = () => {
                                                             }
                                                         </div>
                                                     </div>
-                                                    <p className={errMsg.confirmPassword ? "errmsg error-message" : "offscreen"} aria-live="assertive">
+                                                    <p tabIndex={-1} className={errMsg.confirmPassword ? "errmsg error-message" : "offscreen"} aria-live="assertive">
                                                         {errMsg.confirmPassword}
                                                     </p>
                                                     <br />
@@ -257,8 +300,10 @@ const UserProfile = () => {
                                                     <PencilIcon className="size-6 mx-2"/>
                                                     <p>Modify User</p>
                                                 </div>
-                                                <div className="justify-items-center p-2 cursor-pointer hover:scale-110 hover:bg-slate-200">
-                                                    <TrashIcon onClick={ () => {} } className="size-6 text-red-500 mx-2"></TrashIcon>
+                                                <div 
+                                                    onClick={handleDelete}
+                                                    className="justify-items-center p-2 cursor-pointer hover:scale-110 hover:bg-slate-200">
+                                                    <TrashIcon className="size-6 text-red-500 mx-2"></TrashIcon>
                                                     <p>Delete User</p>
                                                 </div>
                                             </div>
