@@ -5,7 +5,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@heroui/theme/dist/components/popover.js"
+    "./node_modules/@heroui/theme/dist/components/(card|skeleton|popover|ripple).js"
   ],
   theme: {
     extend: {},

@@ -2,8 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
-  @apply bg-slate-100 dark:bg-slate-200
+  @apply bg-slate-200 text-slate-800 dark:bg-[#1b1b1f] dark:text-slate-200;
+}
+
+.navbar {
+  @apply bg-slate-200 dark:bg-[#1b1b1f];
+}
+
+.navbar-buttons {
+  @apply bg-slate-300 dark:text-slate-800
+}
+
+.navbar-buttons li {
+  @apply hover:scale-110
 }
 
 /*:root {
@@ -89,11 +102,6 @@ button:focus-visible {
 
 .success-message {
   @apply text-lime-500
-}
-
-.profileUserContainer {
-  animation-name: appearForm;
-  animation-duration: 1s;
 }
 
 @keyframes appearForm {

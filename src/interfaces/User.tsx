@@ -8,4 +8,5 @@ export interface UserType {
     email: string,
     roles: number[]
     password?: string,
+    confirmPassword?: string
 }

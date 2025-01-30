@@ -1,10 +1,9 @@
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import useRefreshToken from '../hooks/useRefreshToken';
 import useAuth from '../hooks/useAuth';
 import useLocalStorage from '../hooks/useLocalStorage';
 import useLogout from '../hooks/useLogout';
-import { s } from 'framer-motion/client';
 
 const PersistLogin = () => {
     const [ isLoading, setIsLoading ] = useState( true );
@@ -52,7 +51,6 @@ const PersistLogin = () => {
 
     useEffect( () => {
         console.log( 'Is loading state : ', isLoading );
-        console.log( 'At : ', JSON.stringify( auth?.accessToken ) );
     },  [ isLoading ])
 
     return (

@@ -1,3 +1,4 @@
+import './styles/UserProfile.css';
 import { Route, Routes } from "react-router-dom";
 import LoginForm from "./components/pages/Login";
 import CreateAccount from "./components/pages/CreateAccount";
@@ -7,9 +8,12 @@ import Home from "./components/pages/Home";
 import Admin from "./components/pages/Admin";
 import Unauthorized from "./components/Unauthorized";
 import PersistLogin from "./components/PersistLogin";
-import UserProfile from "./components/pages/UserProfile";
 import About from "./components/pages/About";
 import Contact from "./components/pages/Contact";
+import SuspenseComp from "./components/SuspenseComp";
+import { lazy } from "react";
+import reactLogo from './assets/react.svg'
+import UserProfileSkeleton from "./skeletons/UserProfileSkeletons";
 
 export const ROLES = {
     admin: 1000,
@@ -17,6 +21,8 @@ export const ROLES = {
 }
 
 const AppRoute = ( ) => {
+    const UserProfile = lazy( () => import( "./components/pages/UserProfile" ) );;
+
     return (
         <div>
             <Routes>
@@ -36,7 +42,9 @@ const AppRoute = ( ) => {
                         </Route>
 
                         <Route element={<RequireAuth allowedRoles={[ ROLES.user, ROLES.admin ]}/>}>
-                            <Route path="/user/:id/profile" element={<UserProfile/>}/>
+                            <Route element={<SuspenseComp fallback={<UserProfileSkeleton/>}/>}>
+                                <Route path="/user/:id/profile" element={<UserProfile/>}/>
+                            </Route>
                         </Route>
 
                         <Route element={<RequireAuth allowedRoles={[ ROLES.admin ]}/>}>

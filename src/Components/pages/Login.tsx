@@ -14,8 +14,7 @@ function LoginForm( ) {
     const { auth, setAuth } = useContext( AuthContext );
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || '/'; // Go where the user wanted to go before to be in login page
-
+    const from = location.state?.from?.pathname || "/"; // Go where the user wanted to go before to be in login page
     const usernameRef = useRef<HTMLInputElement>( null );
     const errRef = useRef<HTMLInputElement>( null );
 

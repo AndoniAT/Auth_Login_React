@@ -33,11 +33,11 @@ To run project :
 
 
 Other dependencies installed :
-  - axios: For API requests
-  - @fvilers/disable-react-devtools : To disable react devtools in browser
-  - jwt-decode : To decode accesToken received from Backend
-  - clsx : Fot conditional clasnames
-  - [heroui](https://www.heroui.com/docs/components): Some dependencies for styles
+  - [axios](https://www.npmjs.com/package/axios): For API requests
+  - [@fvilers/disable-react-devtools](https://www.npmjs.com/package/@fvilers/disable-react-devtools) : To disable react devtools in browser
+  - [jwt-decode](https://www.npmjs.com/package/jwt-decode) : To decode accesToken received from Backend
+  - [clsx](https://www.npmjs.com/package/clsx) : Fot conditional clasnames
+  - [react-error-boundary](https://legacy.reactjs.org/docs/error-boundaries.html) : To manage errorrs thrown with suspense. An error boundary is a special component that lets you display some fallback UI instead of the part that crashed—for example, an error message. [See more](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary)
 
 For styles see :
   - [Flowbite](https://www.heroui.com/

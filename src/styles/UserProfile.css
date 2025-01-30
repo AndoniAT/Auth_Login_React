@@ -1,0 +1,31 @@
+.profileUserContainer {
+    justify-content: center;
+    @apply flex bg-slate-300 w-full lg:w-5/12 min-h-fit py-10 dark:text-slate-800
+}
+
+.profileUserContainer input {
+    @apply p-2 border-2 border-zinc-400 w-full
+}
+
+.profileUserContainer input[type="text"]:not(.password) {
+    @apply rounded-lg
+}
+
+.profileUserContainer input.password {
+    @apply border-r-0 rounded-s-lg
+}
+
+.profileUserContainer .password-eye-container {
+    @apply flex items-center bg-white border-zinc-400 border-2 rounded-e-lg cursor-pointer
+}
+  
+.profileUserContainer .profileInfoContainter {
+    @apply bg-slate-300 rounded-lg border-black h-fit w-full mx-auto p-2 h-5/6
+}
+
+.profileUserContainer.loading {
+    animation-name: appearForm;
+    animation-duration: 1s;
+    @apply h-dvh
+  }
+  

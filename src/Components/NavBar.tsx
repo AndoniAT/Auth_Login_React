@@ -1,11 +1,15 @@
-import { Link, useNavigate } from "react-router-dom"
+/**
+ * Author : Andoni ALONSO TORT
+ */
+
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useLogout from "../hooks/useLogout";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { jwtDecode } from "jwt-decode";
 import { AccesTokenDecodedType } from "../interfaces/Auth";
 import { ROLES } from "../AppRoute";
-import * as _heroui_aria_utils from '@heroui/aria-utils';
+import * as _heroui_aria_utils from "@heroui/aria-utils";
 import MyTooltip from "./elements/MyTooltip";
 
 const NavBar = () => {
@@ -18,20 +22,18 @@ const NavBar = () => {
 
     const signOut = async() => {
         await logout();
-        navigate( '/' );
+        navigate( "/" );
     };
 
     const goToProfileHandler = async() => {
         if( userConnected ) {
-            navigate( `/user/${userConnected.username}/profile` )
+            navigate( `/user/${userConnected.username}/profile` );
         }
-    }
-
-    console.log("check connection", userConnected);
+    };
 
     return (
         <>
-            <nav className="bg-slate-300 dark:bg-gray-900">
+            <nav className="navbar">
                 <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
                     <a href="https://flowbite.com" className="flex items-center space-x-3 rtl:space-x-reverse">
                         <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
@@ -59,25 +61,25 @@ const NavBar = () => {
                     }
                 </div>
             </nav>
-            <nav className="bg-slate-200 dark:bg-gray-700">
+            <nav className="navbar-buttons">
                 <div className="max-w-screen-xl px-4 py-3 mx-auto">
                     <div className="flex items-center">
                         <ul className="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
                             <li>
-                                <Link to='/' className="text-gray-900 dark:text-white hover:underline" aria-current="page">Home</Link>
+                                <Link to='/' className="hover:underline" aria-current="page">Home</Link>
                             </li>
                             <li>
-                                <Link to='/about' className="text-gray-900 dark:text-white hover:underline">About</Link>
+                                <Link to='/about' className="hover:underline">About</Link>
                             </li>
                             <li>
-                                <Link to='/contact' className="text-gray-900 dark:text-white hover:underline">Contact</Link>
+                                <Link to='/contact' className="hover:underline">Contact</Link>
                             </li>
                             {
                                 userConnected?.roles.includes( ROLES.admin ) ?
                                     <li>
-                                        <Link to='/admin' className="text-gray-900 dark:text-white hover:underline">Admin Page</Link>
+                                        <Link to='/admin' className="hover:underline">Admin Page</Link>
                                     </li>
-                                :
+                                    :
                                     <></>
 
                             }
@@ -86,7 +88,7 @@ const NavBar = () => {
                 </div>
             </nav>
         </>
-    )
-}
+    );
+};
 
 export default NavBar;
