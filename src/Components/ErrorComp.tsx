@@ -9,7 +9,7 @@ interface ErrorType {
     resetErrorBoundary: any
 };
 
-const Error = ( { error, resetErrorBoundary  } : ErrorType ) => {
+const ErrorComp = ( { error, resetErrorBoundary  } : ErrorType ) => {
 
     return (
         <div className="my-0 mx-auto w-fit justify-items-center mt-[10%]">
@@ -20,4 +20,4 @@ const Error = ( { error, resetErrorBoundary  } : ErrorType ) => {
     );
 };
 
-export default Error;
+export default ErrorComp;

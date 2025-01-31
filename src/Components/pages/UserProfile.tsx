@@ -241,7 +241,7 @@ function FooterUpdateButtons( { show, handlers } : FooterActions ) {
     return (
         show.showActionButtons ?
             <div className="px-6 py-4 flex justify-center;" style={{ justifyContent: "center" }}>
-                <div onClick={() => handlers.edit(true)}
+                <div onClick={() => handlers.edit( true )}
                     className="text-center justify-items-center p-2 cursor-pointer hover:scale-110 hover:bg-slate-200">
                     <PencilIcon className="size-6 mx-2" />
                     <p>Modify User</p>

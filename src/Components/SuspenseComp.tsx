@@ -5,7 +5,7 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Outlet } from "react-router-dom";
-import Error from "./Error";
+import ErrorComp from "./ErrorComp";
 
 interface TypeParams {
     fallback: JSX.Element
@@ -13,7 +13,7 @@ interface TypeParams {
 
 const SuspenseComp = ( { fallback } : TypeParams ) => {
     return (
-        <ErrorBoundary FallbackComponent={Error}>
+        <ErrorBoundary FallbackComponent={ErrorComp}>
             <Suspense fallback={fallback}>
                 <Outlet/>
             </Suspense>
