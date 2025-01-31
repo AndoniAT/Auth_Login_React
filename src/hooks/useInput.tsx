@@ -1,3 +1,7 @@
+/**
+ * Author: Andoni ALONSO TORT
+ */
+
 import useLocalStorage from "./useLocalStorage";
 
 const useInput = ( key:string, initValue:any ) => {

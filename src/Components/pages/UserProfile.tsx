@@ -1,3 +1,7 @@
+/**
+ * Author: Andoni ALONSO TORT
+ */
+
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { UserType } from "../../interfaces/User";
 import { ChatBubbleBottomCenterTextIcon, PencilIcon, TrashIcon, UserPlusIcon } from "@heroicons/react/24/solid";

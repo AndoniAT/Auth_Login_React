@@ -1,3 +1,7 @@
+/**
+ * Author: Andoni ALONSO TORT
+ */
+
 import { createContext, useState, ReactNode  } from "react";
 import { AuthContextType } from "../interfaces/Auth";
 

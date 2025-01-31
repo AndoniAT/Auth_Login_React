@@ -1,3 +1,7 @@
+/**
+ * Author: Andoni ALONSO TORT
+ */
+
 export interface UserType {
     _id?: string,
     createdAt?: string,

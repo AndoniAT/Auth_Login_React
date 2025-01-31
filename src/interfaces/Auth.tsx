@@ -1,3 +1,7 @@
+/**
+ * Author: Andoni ALONSO TORT
+ */
+
 import { UserType } from "./User";
 
 export interface AuthType {

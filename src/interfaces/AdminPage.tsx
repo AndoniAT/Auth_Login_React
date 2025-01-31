@@ -1,3 +1,7 @@
+/**
+ * Author: Andoni ALONSO TORT
+ */
+
 import { UserType } from "./User";
 
 type GetUsersHookType = [

@@ -1,3 +1,7 @@
+/**
+ * Author: Andoni ALONSO TORT
+ */
+
 import { useState, useEffect } from "react";
 
 const getLocalValue = ( key:string, initValue:any ) => {

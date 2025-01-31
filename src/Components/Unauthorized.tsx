@@ -1,3 +1,7 @@
+/**
+ * Author: Andoni ALONSO TORT
+ */
+
 import { useNavigate } from "react-router-dom";
 
 const Unauthorized = ( ) => {

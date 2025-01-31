@@ -1,3 +1,7 @@
+/**
+ * Author: Andoni ALONSO TORT
+ */
+
 import axios from "../api/axios";
 import useAuth from "./useAuth";
 

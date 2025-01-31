@@ -1,3 +1,7 @@
+/**
+ * Author: Andoni ALONSO TORT
+ */
+
 import { Outlet } from "react-router-dom";
 import NavBar from "./NavBar";
 

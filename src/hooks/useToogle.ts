@@ -1,3 +1,7 @@
+/**
+ * Author: Andoni ALONSO TORT
+ */
+
 import useLocalStorage from "./useLocalStorage";
 
 const useToogle = ( key:string, initValue:any ) => {
