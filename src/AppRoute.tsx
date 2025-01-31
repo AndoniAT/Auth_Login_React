@@ -24,7 +24,7 @@ export const ROLES = {
 };
 
 const AppRoute = ( ) => {
-    const UserProfile = lazy( () => import( "./components/pages/UserProfile" ) );;
+    const UserProfile = lazy( () => import( "./components/pages/UserProfile/UserProfile" ) );;
 
     return (
         <div>

@@ -2,21 +2,23 @@
  * Author: Andoni ALONSO TORT
  */
 
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { UserType } from "../../interfaces/User";
-import { ChatBubbleBottomCenterTextIcon, PencilIcon, TrashIcon, UserPlusIcon } from "@heroicons/react/24/solid";
-import { ROLES } from "../../AppRoute";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { UserType } from "../../../interfaces/User";
+import { ROLES } from "../../../AppRoute";
 import { AxiosInstance } from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { useConnectedUser, useCreateInputs, useCreateReferences, useGetUserProfile, useHandlerError, useVerifyCritialChanges } from "../../hooks/packages/UserProfileHooks";
+import { useConnectedUser, useCreateInputs, useCreateReferences, useGetUserProfile, useHandlerError, useVerifyCritialChanges } from "../../../hooks/packages/UserProfileHooks";
 import { useEffect, useState } from "react";
 import { Card } from "@heroui/card";
-import ApiErrorHandler from "../../apiErrorHandler";
-import useLogout from "../../hooks/useLogout";
-import MyInput from "../elements/MyInput";
-import PasswordInputs from "../elements/PasswordInput";
-import MyCheckBox from "../elements/MyCheckBox";
-import { FooterActions } from "../../interfaces/UserProfile";
+import ApiErrorHandler from "../../../apiErrorHandler";
+import useLogout from "../../../hooks/useLogout";
+import MyInput from "../../elements/MyInput";
+import PasswordInputs from "../../elements/PasswordInput";
+import MyCheckBox from "../../elements/MyCheckBox";
+import { FooterActions } from "../../../interfaces/UserProfile";
+import Interactions from "./Sections/Interactions";
+import Posts from "./Sections/Posts";
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 
 const updateUser = ( id:string, _axiosPrivate:AxiosInstance, data:UserType ) => {
     return _axiosPrivate.put( `/api/users/${id}`, data, {
@@ -153,7 +155,7 @@ const UserProfile = () => {
     const showSaveCancelButtons = ( ( isMe || connectedUser.isAdmin ) && editMode );
 
     return (
-        <div className="block lg:flex">
+        <div className="block lg:flex profile-page-container">
             {
                 /* Profile form / information section */
                 <>
@@ -216,14 +218,20 @@ const UserProfile = () => {
                         </Card>
                     </div>
 
-                    {
-                        /* Interactions sections */
-                        ( !isMe && defaultUser )
-                            ?
-                            <Interactions username={defaultUser.username}/>
-                            :
-                            <></>
-                    }
+                    <div className="block lg:w-7/12">
+                        {
+                            /* Interactions sections */
+                            ( !isMe && defaultUser )
+                                ?
+                                <Interactions username={defaultUser.username}/>
+                                :
+                                <></>
+                        }
+                        {
+                            /* POSTS */
+                            <Posts/>
+                        }
+                    </div>
                 </>
             }
             {
@@ -272,26 +280,5 @@ function FooterUpdateButtons( { show, handlers } : FooterActions ) {
                 </div>
                 :
                 <></>
-    );
-}
-
-function Interactions( { username }:Readonly<{ username:string }> ) {
-    return (
-        <div className="flex lg:w-7/12">
-            <div className="p-4 h-fit">
-                <div className="justify-items-center cursor-pointer hover:scale-110 hover:bg-slate-400 hover:rounded-md hover:p-2">
-                    <UserPlusIcon className="size-20 text-yellow-500 mx-2"/>
-                    <p className="dark:text-white">Add {username} to my network</p>
-                </div>
-            </div>
-            {
-                <div className="p-4 h-fit">
-                    <div className="justify-items-center cursor-pointer hover:scale-110 hover:bg-slate-400 hover:rounded-md hover:p-2">
-                        <ChatBubbleBottomCenterTextIcon className="size-20 text-yellow-500 mx-2"/>
-                        <p className="dark:text-white">Start chat with {username}</p>
-                    </div>
-                </div>
-            }
-        </div>
     );
 }
