@@ -19,6 +19,7 @@ export default function UserProfileSkeleton() {
                 </Card>
             </div>
             <div className="flex lg:w-7/12">
+                <PostsSkeleton/>
             </div>
         </div>
     );
