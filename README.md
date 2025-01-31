@@ -80,8 +80,8 @@ See [tailwind documentation](https://tailwindcss.com/docs/guides/vite) to see ho
 On the homepage, there will be a page similar to when starting a new project with React + Vite, except that there will be an additional navbar with navigation buttons.
 
 <div style="flex inline-flex">
-     <img src="https://github.com/user-attachments/assets/fe029448-ce47-44fb-81fd-6f322305aceb" width="300"/>
-     <img src="https://github.com/user-attachments/assets/56f1d304-0ce3-4083-8e7e-4a132578efcb" width="300"/>
+     <img src="https://github.com/user-attachments/assets/fe029448-ce47-44fb-81fd-6f322305aceb" width="500"/>
+     <img src="https://github.com/user-attachments/assets/56f1d304-0ce3-4083-8e7e-4a132578efcb" width="500"/>
 </div>
 
 ## == 🔐 Login ==
@@ -93,8 +93,8 @@ Each time an API call fails because the token has expired, the application will 
 Added a 'Trust this device' checkbox to stay logged into the application.
 
 <div style="flex inline-flex">
-     <img src="https://github.com/user-attachments/assets/2e6326d2-8172-4eb4-846f-3235105308b5" width="300"/>
-     <img src="https://github.com/user-attachments/assets/cd362988-b2a6-4eda-ad33-dca21a9e5f65" width="300"/>
+     <img src="https://github.com/user-attachments/assets/2e6326d2-8172-4eb4-846f-3235105308b5" width="500"/>
+     <img src="https://github.com/user-attachments/assets/cd362988-b2a6-4eda-ad33-dca21a9e5f65" width="500"/>
 </div>
 
 ## == ✅🧔 Create Account ==
@@ -102,8 +102,8 @@ Added a 'Trust this device' checkbox to stay logged into the application.
 Create an account while following the rules defined in the [Back-end project](https://github.com/AndoniAT/Auth_JWT_NodeJs). Once the account is created, the user will be redirected to the login page.
 
 <div style="flex inline-flex">
-    <img src="https://github.com/user-attachments/assets/5205d68a-6d52-4038-8131-23374c07fda7" width="300"/>
-    <img src="https://github.com/user-attachments/assets/4622bc3a-a107-4046-8a86-0a103dfc5db6" width="300"/>
+    <img src="https://github.com/user-attachments/assets/5205d68a-6d52-4038-8131-23374c07fda7" width="500"/>
+    <img src="https://github.com/user-attachments/assets/4622bc3a-a107-4046-8a86-0a103dfc5db6" width="500"/>
 </div>
 
 ## == 👨‍💼 Admin Page Users Manage ==
@@ -113,8 +113,8 @@ The admin page displays a list of users with action buttons: Edit and Delete.
 ‼️WARNING: An administrator cannot be deleted if they are the only administrator of the application.
 
 <div style="flex inline-flex">
-   <img src="https://github.com/user-attachments/assets/161ab61b-6c30-450f-a460-77c3e10f3412" width="300"/>
-   <img src="https://github.com/user-attachments/assets/4648d227-143c-4cfb-8e4e-546fbee5ac6a" width="300"/>
+   <img src="https://github.com/user-attachments/assets/161ab61b-6c30-450f-a460-77c3e10f3412" width="500"/>
+   <img src="https://github.com/user-attachments/assets/4648d227-143c-4cfb-8e4e-546fbee5ac6a" width="500"/>
 </div>
 
 ## == 👨‍💻 User Profile ==
@@ -130,15 +130,15 @@ The user profile page is divided into 3 sections:
 (Points 2 and 3 are not features of this application. They are just examples of what could be added. This application is designed solely to provide a complete authentication and user management project based on roles.)
 
 <div style="flex inline-flex">
-   <img src="https://github.com/user-attachments/assets/36988fbb-d41a-49e5-b0f4-1e1659cfddc9" width="300"/>
-   <img src="https://github.com/user-attachments/assets/301a4715-db83-4825-aec7-115f6f59e5b4" width="300"/>
+   <img src="https://github.com/user-attachments/assets/36988fbb-d41a-49e5-b0f4-1e1659cfddc9" width="500"/>
+   <img src="https://github.com/user-attachments/assets/301a4715-db83-4825-aec7-115f6f59e5b4" width="500"/>
 </div>
 
 ‼️WARNING: Some modifications to sensitive information ( email, username and roles ) may require reauthentication.
 
 <div style="flex inline-flex">
-   <img src="https://github.com/user-attachments/assets/90b6cff1-720a-4eb6-8d6f-9aa6ff120787" width="300"/>
-   <img src="https://github.com/user-attachments/assets/98edacff-8e1b-4214-b616-480c131c6c48" width="300"/>
+   <img src="https://github.com/user-attachments/assets/90b6cff1-720a-4eb6-8d6f-9aa6ff120787" width="500"/>
+   <img src="https://github.com/user-attachments/assets/98edacff-8e1b-4214-b616-480c131c6c48" width="500"/>
 </div>
 
 # == ✅➕ MORE ==
@@ -153,8 +153,8 @@ The user profile page is divided into 3 sections:
 - Error messages on the page if a resource fails to load properly.
 
 <div style="flex inline-flex">
-  <img src="https://github.com/user-attachments/assets/48f01ae2-16e0-4088-ac3c-a6cead7423c3" width="300"/>
-  <img src="https://github.com/user-attachments/assets/a70273fd-c81c-4aff-949c-76fcb07f3723" width="300"/>
+  <img src="https://github.com/user-attachments/assets/48f01ae2-16e0-4088-ac3c-a6cead7423c3" width="500"/>
+  <img src="https://github.com/user-attachments/assets/a70273fd-c81c-4aff-949c-76fcb07f3723" width="500"/>
 </div>
 
 ## == 🔄️ LOAGING DATA (Suspend => SKELETONS ) ==
@@ -162,8 +162,8 @@ The user profile page is divided into 3 sections:
 Use of Suspense to display a loading skeleton while the data is being loaded. This feature enhances the user experience
 
 <div style="flex inline-flex">
-  <img src="https://github.com/user-attachments/assets/c1466d4d-056f-422c-8c03-d9a648a974f6" width="300"/>
-  <img src="https://github.com/user-attachments/assets/24d1fcda-d345-4519-9c62-84b1b8bf5ad9" width="300"/>
+  <img src="https://github.com/user-attachments/assets/c1466d4d-056f-422c-8c03-d9a648a974f6" width="500"/>
+  <img src="https://github.com/user-attachments/assets/24d1fcda-d345-4519-9c62-84b1b8bf5ad9" width="500"/>
 </div>
 
 ## == ❌ ERROR FORMS ==
@@ -171,8 +171,8 @@ Use of Suspense to display a loading skeleton while the data is being loaded. Th
 Display clear error messages in forms so that the user can correct the submitted information.
 
 <div style="flex inline-flex">
-  <img src="https://github.com/user-attachments/assets/da6ddfa7-654f-453d-93c2-160e5fe15121" width="300"/>
-  <img src="https://github.com/user-attachments/assets/7aac1b80-6c39-4a7f-a48d-dbb64182e528" width="300"/>
+  <img src="https://github.com/user-attachments/assets/da6ddfa7-654f-453d-93c2-160e5fe15121" width="500"/>
+  <img src="https://github.com/user-attachments/assets/7aac1b80-6c39-4a7f-a48d-dbb64182e528" width="500"/>
 </div>
 
 <hr/>
