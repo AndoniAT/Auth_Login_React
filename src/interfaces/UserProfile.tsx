@@ -81,6 +81,19 @@ type GetUserProfileHookType = [
     setDefaultUser: React.Dispatch<React.SetStateAction<UserType | null >>
 ]
 
+interface FooterActions {
+    show: {
+        showActionButtons:boolean
+        showSaveCancelButtons:boolean
+    }
+    handlers:{
+        edit:( b:boolean ) => void
+        delete:() => void
+        save: () => void,
+        cancel: () => void
+    }
+}
+
 export type {
     ReferencesKeysType,
     FormReferencesType,
@@ -90,5 +103,6 @@ export type {
     VerifyCriticalChangesHookType,
     ErrorMessagesType,
     ErrorHandlerHookType,
-    GetUserProfileHookType
+    GetUserProfileHookType,
+    FooterActions
 };

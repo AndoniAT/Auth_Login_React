@@ -1,27 +1,16 @@
 .profileUserContainer {
     justify-content: center;
     @apply
-    flex bg-slate-300 w-full lg:w-5/12 min-h-fit py-10
+    flex bg-slate-300 w-full lg:w-5/12 min-h-screen py-10
 }
 
 .profileUserContainer label {
     @apply block mb-2 text-sm font-medium dark:text-slate-800
 }
 
-.profileUserContainer input {
-    @apply p-2 border-2 border-zinc-400 w-full
-}
-
-.profileUserContainer input[type="text"]:not(.password) {
-    @apply rounded-lg
-}
-
-.profileUserContainer input.password {
-    @apply border-r-0 rounded-s-lg
-}
-
-.profileUserContainer .password-eye-container {
-    @apply flex items-center bg-white border-zinc-400 border-2 rounded-e-lg cursor-pointer
+.profileUserContainer .profileInfoContainter input {
+    @apply p-2 border-zinc-400 w-full 
+    border border-gray-500
 }
   
 .profileUserContainer .profileInfoContainter {
@@ -35,23 +24,47 @@
   }
 
 .profileUserContainer input {
-    @apply bg-gray-50 
+    @apply 
     border border-gray-500 text-sm
     focus:ring-blue-500 focus:border-blue-500
-    block w-full p-2.5 
+    block w-full p-2.5
     /* dark */
-    dark:bg-gray-400 dark:border-gray-300
+    dark:border-gray-300
     dark:text-slate-800
     dark:focus:ring-blue-500 dark:focus:border-blue-500
     dark:placeholder:text-slate-600
 }
 
 .profileUserContainer input:disabled {
-    @apply text-slate-500 dark:text-slate-700
+    @apply text-slate-500 dark:text-slate-700 dark:bg-gray-400
 }
 
 .profileUserContainer input[type="checkbox"] {
+    accent-color: rgb(67, 198, 67);
     @apply w-7 h-7
   }
-  
-  
+
+.profileUserContainer input[type="checkbox"]:disabled {
+    appearance: none; /* Désactive le style natif */
+    width: 16px;
+    height: 16px;
+    background: rgb(138, 138, 138); /* Force la couleur */
+    cursor: not-allowed;
+    border-radius: 3px;
+    @apply border-2 border-slate-800 p-3
+}
+
+.profileUserContainer input[type="checkbox"]:disabled:checked {
+    background: rgb(127, 244, 176);
+    position: relative;
+}
+
+.profileUserContainer input[type="checkbox"]:disabled:checked::after {
+    content: "✔️";
+    font-size: 1.3rem;
+    color: white;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

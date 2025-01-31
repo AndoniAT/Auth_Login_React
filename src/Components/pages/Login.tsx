@@ -1,10 +1,12 @@
-import "../../styles/Login.css";
+import "../../styles/login.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import AuthContext from "../../context/AuthProvider";
 import { useContext, useEffect, useRef, useState } from "react";
 import useInput from "../../hooks/useInput";
 import useToogle from "../../hooks/useToogle";
+import PasswordInputs from "../elements/PasswordInput";
+import MyInput from "../elements/MyInput";
 
 /*interface LoginInterface {
     email: HTMLInputElement,
@@ -75,7 +77,7 @@ function LoginForm( ) {
     }, [ persist ] );*/
 
     return (
-        <form className={"loginContainer"}
+        <form className={"loginContainer container-form"}
             onSubmit={onSubmit}>
             <div className="w-full text-center">
                 <span className="text-2xl font-semibold whitespace-nowrap">LOGIN</span>
@@ -83,25 +85,12 @@ function LoginForm( ) {
             <div className="w-full text-center">
                 <p ref={errRef} className={errMsg ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg}</p>
             </div>
-            <div className="mb-5">
-                <label htmlFor="username" className="block mb-2 text-sm font-medium">
-                    Your username
-                </label>
-                <input
-                    ref={usernameRef}
-                    {...usernameAttr}
-                    type="text" id="username" className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="usernameExample" required
-                />
-            </div>
-            <div className="mb-5">
-                <label htmlFor="password" className="block mb-2 text-sm font-medium">Your password</label>
-                <input
-                    value={pwd}
-                    onChange={ e => setPwd( e.currentTarget.value ) }
-                    type="password" id="password" className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required />
-            </div>
+            <MyInput label="Your username" reference={usernameRef} type="text"
+                id="username" placeholder="Your username"
+                required={true} { ...usernameAttr }/>
+            <PasswordInputs password={{
+                value: pwd, set: setPwd
+            }}/>
             <div className="flex items-start mb-5">
                 <div className="flex items-center h-5">
                     <input id="persist" type="checkbox" value=""

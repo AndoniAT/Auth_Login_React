@@ -1,4 +1,4 @@
-import "../../styles/Admin.css";
+import "../../styles/admin.css";
 
 import Users from "../Users";
 const Admin = () => {

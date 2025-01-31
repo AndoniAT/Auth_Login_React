@@ -1,7 +1,7 @@
 import reactLogo from "../../assets/react.svg";
 import viteLogo from "/vite.svg";
 import { useState } from "react";
-import "../../styles/Main.css";
+import "../../styles/main.css";
 import * as _heroui_aria_utils from "@heroui/aria-utils";
 import MyTooltip from "../elements/MyTooltip";
 

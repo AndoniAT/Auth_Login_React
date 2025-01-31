@@ -60,7 +60,12 @@ const NavBar = () => {
                             </div>
                             :
                             <div className="flex items-center space-x-6 rtl:space-x-reverse">
-                                <Link to='/login' className="text-sm  text-blue-600 dark:text-blue-500 hover:underline">Login</Link>
+                                <div>
+                                    <Link to='/login' className="text-sm  text-blue-600 dark:text-blue-500 hover:underline">Login</Link>
+                                </div>
+                                <div>
+                                    <Link to='/createAccount' className="text-sm  text-blue-600 dark:text-blue-500 hover:underline">Create Account</Link>
+                                </div>
                             </div>
 
                     }

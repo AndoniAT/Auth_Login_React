@@ -1,8 +1,10 @@
-import "../../styles/Login.css";
+import "../../styles/login.css";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useInput from "../../hooks/useInput";
 import axios from "../../api/axios";
+import PasswordInputs from "../elements/PasswordInput";
+import MyInput from "../elements/MyInput";
 
 function CreateAccount() {
     const navigate = useNavigate();
@@ -80,14 +82,6 @@ function CreateAccount() {
 
     useEffect( () => {
         setErrMsg( prev => {
-            const errPwd = password === confirmPassword ? "" : "Passwords don't match";
-            return { ...prev, confirmPassword: errPwd };
-        } );
-
-    }, [ password, confirmPassword ] );
-
-    useEffect( () => {
-        setErrMsg( prev => {
             return { ...prev, gral: "", username:"", firstname: "", lastname: "", email: "" };
         } );
     }, [ username, firstname, lastname, email ] );
@@ -159,87 +153,21 @@ function CreateAccount() {
     };
 
     return (
-        <form
-            onSubmit={createUser}
-            className={"loginContainer"}>
+        <form onSubmit={createUser} className={"loginContainer container-form"}>
             <div className="w-full text-center mb-3">
                 <span className="text-2xl font-semibold whitespace-nowrap">CREATE ACCOUNT</span>
             </div>
             <div tabIndex={-1} className="w-full text-center mb-3" ref={references.gralError}>
                 <p className={errMsg.gral ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.gral}</p>
             </div>
-            <div className="mb-5">
-                <label htmlFor="username" className="block mb-2 text-sm font-medium">
-                    Your Username
-                </label>
-                <input
-                    ref={references.username}
-                    {...inputs.username.attr}
-                    type="username"
-                    id="username"
-                    className={""}
-                    placeholder="Username" required />
-                <p className={errMsg.username ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.username}</p>
-            </div>
-            <div className="mb-5">
-                <label htmlFor="firstname" className="block mb-2 text-sm font-medium">
-                    Your Firstname
-                </label>
-                <input
-                    ref={references.firstname}
-                    {...inputs.firstname.attr}
-                    type="firstname"
-                    id="firstname"
-                    className={""}
-                    placeholder="Firstname" required />
-                <p className={errMsg.firstname ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.firstname}</p>
-            </div>
-            <div className="mb-5">
-                <label htmlFor="lastname" className="block mb-2 text-sm font-medium">
-                    Your Lastname
-                </label>
-                <input
-                    ref={references.lastname}
-                    {...inputs.lastname.attr}
-                    type="lastname"
-                    id="lastname"
-                    className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Lastname" required />
-                <p className={errMsg.lastname ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.lastname}</p>
-            </div>
-            <div className="mb-5">
-                <label htmlFor="email" className="block mb-2 text-sm font-medium">
-                    Your email
-                </label>
-                <input
-                    ref={references.email}
-                    {...inputs.email.attr}
-                    type="email"
-                    id="email"
-                    className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="email@example.com" required />
-                <p className={errMsg.email ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.email}</p>
-            </div>
-            <div className="mb-5">
-                <label htmlFor="password" className="block mb-2 text-sm font-medium">Your password</label>
-                <input
-                    ref={references.password}
-                    value={password}
-                    onChange={ e => setPassword( e.currentTarget.value ) }
-                    type="password" id="password" className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                <p className={errMsg.password ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.password}</p>
-            </div>
-            <div className="mb-5">
-                <label htmlFor="repeat-assword" className="block mb-2 text-sm font-medium">
-                    Repeat password
-                </label>
-                <input
-                    ref={references.confirmPassword}
-                    value={confirmPassword}
-                    onChange={ e => setConfirmPassword( e.currentTarget.value ) }
-                    type="password" id="repeat-password" className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                <p className={errMsg.confirmPassword ? "errmsg error-message" : "offscreen"} aria-live="assertive">{errMsg.confirmPassword}</p>
-            </div>
+            <MyInput id="username" label="Your Username" type="text" err={errMsg.username} ref={references.username} className={""} placeholder="Username" required {...inputs.username.attr} />
+            <MyInput id="firstname" label="Your Firstname" type="text" err={errMsg.firstname} ref={references.firstname} className={""} placeholder="Firstname" required {...inputs.firstname.attr} />
+            <MyInput id="lastname" label="Your Lastname" type="text" err={errMsg.lastname} ref={references.lastname} className={""} placeholder="Lastname" required {...inputs.lastname.attr} />
+            <MyInput id="email" label="Your email" type="text" err={errMsg.email} ref={references.email} className={""} placeholder="email@example.com" required {...inputs.email.attr} />
+            <PasswordInputs
+                password={{ reference: references.password, value: password, errMsg: errMsg.password, set: setPassword }}
+                confirmPassword={{ reference: references.confirmPassword, value: confirmPassword, errMsg: errMsg.confirmPassword, set: setConfirmPassword }}
+            />
             <div className="flex items-start mb-5">
                 <Link to='/login' className="text-blue-900 hover:underline dark:text-blue-500">I have an account</Link>
             </div>

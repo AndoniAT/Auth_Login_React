@@ -104,6 +104,21 @@ button:focus-visible {
   @apply text-lime-500
 }
 
+/* FORMS */
+
+.container-form input.password {
+  @apply border-r-0 rounded-s-lg
+}
+
+.container-form .password-eye-container {
+  @apply flex items-center bg-white border-zinc-400 border-2 rounded-e-lg cursor-pointer
+}
+
+.container-form input[type="text"]:not(.password) {
+  @apply rounded-lg
+}
+
+
 @keyframes appearForm {
   from { margin-left: -100%; }
   to { margin-left: 0; }

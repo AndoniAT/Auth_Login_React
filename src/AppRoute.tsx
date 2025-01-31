@@ -1,4 +1,4 @@
-import "./styles/UserProfile.css";
+import "./styles/userProfile.css";
 import { Route, Routes } from "react-router-dom";
 import LoginForm from "./components/pages/Login";
 import CreateAccount from "./components/pages/CreateAccount";

@@ -11,10 +11,9 @@
 .loginContainer input {
     @apply bg-gray-50 
     border border-gray-500 text-sm
-    rounded-lg focus:ring-blue-500 focus:border-blue-500
+    focus:ring-blue-500 focus:border-blue-500
     block w-full p-2.5 
-    /* dark */
-    dark:bg-gray-400 dark:border-gray-300
+
     dark:text-slate-800
     dark:focus:ring-blue-500 dark:focus:border-blue-500
     dark:placeholder:text-slate-600

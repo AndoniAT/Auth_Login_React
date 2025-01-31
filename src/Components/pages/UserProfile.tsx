@@ -1,6 +1,6 @@
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { UserType } from "../../interfaces/User";
-import { ChatBubbleBottomCenterTextIcon, EyeIcon, EyeSlashIcon, PencilIcon, TrashIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { ChatBubbleBottomCenterTextIcon, PencilIcon, TrashIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import { ROLES } from "../../AppRoute";
 import { AxiosInstance } from "axios";
 import { useNavigate, useParams } from "react-router-dom";
@@ -9,6 +9,10 @@ import { useEffect, useState } from "react";
 import { Card } from "@heroui/card";
 import ApiErrorHandler from "../../apiErrorHandler";
 import useLogout from "../../hooks/useLogout";
+import MyInput from "../elements/MyInput";
+import PasswordInputs from "../elements/PasswordInput";
+import MyCheckBox from "../elements/MyCheckBox";
+import { FooterActions } from "../../interfaces/UserProfile";
 
 const updateUser = ( id:string, _axiosPrivate:AxiosInstance, data:UserType ) => {
     return _axiosPrivate.put( `/api/users/${id}`, data, {
@@ -33,8 +37,6 @@ const UserProfile = () => {
     const [ defaultUser, setDefaultUser ] = useGetUserProfile();
 
     // == States ==
-    const [ typePassword, setTypePassword ] = useState( true );
-    const [ typeConfirmPassword, setTypeConfirmPassword ] = useState( true );
     const [ isMe, setIsMe ] = useState( false );
     const [ editMode, setEditMode ] = useState( false );
 
@@ -87,7 +89,7 @@ const UserProfile = () => {
     };
 
     // => Delete
-    const handleDelete = () => {
+    const handlerDelete = () => {
         if( !id ) return;
 
         deleteUser( id, axiosPrivate )
@@ -130,6 +132,22 @@ const UserProfile = () => {
         }
     };
 
+    // => Change admin rights
+    const handleChangeRights = () => {
+        const isAdmin = inputs.roles.value.includes( ROLES.admin );
+        let userRoles = [ ...inputs.roles.value ];
+        if( isAdmin ) {
+            userRoles = userRoles.filter( ( role:number ) => role !== ROLES.admin );
+            inputs.roles.reset( userRoles );
+        } else {
+            userRoles.push( ROLES.admin );
+            inputs.roles.reset( userRoles );
+        }
+    };
+
+    const showActionButtons = ( ( isMe || connectedUser.isAdmin ) && !editMode );
+    const showSaveCancelButtons = ( ( isMe || connectedUser.isAdmin ) && editMode );
+
     return (
         <div className="block lg:flex">
             {
@@ -147,183 +165,48 @@ const UserProfile = () => {
 
                             {
                                 /* == FORM == */
-                                <div className="profileInfoContainter">
+                                <div className="profileInfoContainter container-form">
                                     <div className="">
-                                        <label htmlFor="username" className="">Username :</label>
-                                        {
-                                            <>
-                                                <input type="text"
-                                                    placeholder="Your username"
-                                                    ref={references.username}
-                                                    {...inputs.username.attr}
-                                                    disabled={!editMode}/>
-                                                <p tabIndex={-1} className={errMsg.username ? "errmsg error-message" : "offscreen"} aria-live="assertive">
-                                                    {errMsg.username}
-                                                </p>
-                                            </>
-                                        }
-                                        <br />
-                                        <label htmlFor="fistname" className="">Firstname :</label>
-                                        {
-                                            <>
-                                                <input type="text"
-                                                    placeholder="Your firstname"
-                                                    ref={references.firstname}
-                                                    {...inputs.firstname.attr}
-                                                    disabled={!editMode}
-                                                />
-                                                <p tabIndex={-1} className={errMsg.firstname ? "errmsg error-message" : "offscreen"} aria-live="assertive">
-                                                    {errMsg.firstname}
-                                                </p>
-                                            </>
-                                        }
-                                        <br />
-                                        <label htmlFor="lastname" className="mt-2">Lastname :</label>
-                                        {
-                                            <>
-                                                <input type="text"
-                                                    placeholder="Your lastname"
-                                                    ref={references.lastname}
-                                                    {...inputs.lastname.attr}
-                                                    disabled={!editMode}/>
-                                                <p tabIndex={-1} className={errMsg.lastname ? "errmsg error-message" : "offscreen"} aria-live="assertive">
-                                                    {errMsg.lastname}
-                                                </p>
-                                            </>
-                                        }
-                                        <br />
-                                        <label htmlFor="email" className="mt-2">Email :</label>
-                                        {
-                                            <>
-                                                <input type="text"
-                                                    placeholder="your_email@example.com"
-                                                    ref={references.email}
-                                                    {...inputs.email.attr}
-                                                    disabled={!editMode}/>
-                                                <p tabIndex={-1} className={errMsg.email ? "errmsg error-message" : "offscreen"} aria-live="assertive">
-                                                    {errMsg.email}
-                                                </p>
-                                            </>
-                                        }
-                                        <br />
+                                        <MyInput id="username" label="Username :" type="text" err={errMsg.username} ref={references.username} placeholder="Username" disabled={!editMode} {...inputs.username.attr} />
+                                        <MyInput id="firstname" label="Firstname :" type="text" err={errMsg.firstname} ref={references.firstname} placeholder="Firstname" disabled={!editMode} {...inputs.firstname.attr} />
+                                        <MyInput id="lastname" label="Lastname :" type="text" err={errMsg.lastname} ref={references.lastname} placeholder="Lastname" disabled={!editMode} {...inputs.lastname.attr} />
+                                        <MyInput id="email" label="Email :" type="text" err={errMsg.email} ref={references.email} placeholder="youremail@example.com" disabled={!editMode} {...inputs.email.attr} />
                                         {
                                             /** Password */
                                             editMode ?
-                                                <>
-                                                    <p className="mt-2">Password :</p>
-                                                    <div className="flex">
-                                                        <input type={typePassword ? "password" : "text" }
-                                                            placeholder="New password"
-                                                            ref={references.password}
-                                                            value={inputs.password.value}
-                                                            onChange={ e => inputs.password.reset( e.currentTarget.value ) }
-                                                            className="password"/>
-                                                        <div
-                                                            onClick={ () => setTypePassword( !typePassword ) }
-                                                            className="password-eye-container">
-                                                            {
-                                                                typePassword ?
-                                                                    <EyeIcon className="size-6 mx-2 bg-white text-zinc-600"/>
-                                                                    :
-                                                                    <EyeSlashIcon className="size-6 mx-2 bg-white text-zinc-600"/>
-                                                            }
-                                                        </div>
-
-                                                    </div>
-                                                    <p tabIndex={-1} className={errMsg.password ? "errmsg error-message" : "offscreen"} aria-live="assertive">
-                                                        {errMsg.password}
-                                                    </p>
-                                                    <br />
-                                                    <p className="mt-2">Confirm Password :</p>
-                                                    <div className="flex">
-                                                        <input
-                                                            type={typeConfirmPassword ? "password" : "text" }
-                                                            placeholder="Repeat password"
-                                                            ref={references.confirmPassword}
-                                                            value={inputs.confirmPassword.value}
-                                                            onChange={ e => inputs.confirmPassword.reset( e.currentTarget.value ) }
-                                                            className="password"/>
-                                                        <div
-                                                            onClick={ () => setTypeConfirmPassword( !typeConfirmPassword ) }
-                                                            className="password-eye-container">
-                                                            {
-                                                                typeConfirmPassword ?
-                                                                    <EyeIcon className="size-6 mx-2 bg-white text-zinc-600"/>
-                                                                    :
-                                                                    <EyeSlashIcon className="size-6 mx-2 bg-white text-zinc-600"/>
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                    <p tabIndex={-1} className={errMsg.confirmPassword ? "errmsg error-message" : "offscreen"} aria-live="assertive">
-                                                        {errMsg.confirmPassword}
-                                                    </p>
-                                                    <br />
-                                                </>
+                                                <PasswordInputs
+                                                    password={{
+                                                        reference: references.password,
+                                                        value: inputs.password.value,
+                                                        set: inputs.password.reset,
+                                                        errMsg: errMsg.password
+                                                    }}
+                                                    confirmPassword={{
+                                                        reference: references.confirmPassword,
+                                                        value: inputs.confirmPassword.value,
+                                                        set: inputs.confirmPassword.reset,
+                                                        errMsg: errMsg.confirmPassword
+                                                    }}
+                                                />
                                                 : <></>
                                         }
                                         {
                                             connectedUser.isAdmin
                                                 ?
-                                                <div className="flex items-start mb-5 mt-4">
-                                                    <div className="flex items-center h-5">
-                                                        <input id="persist" type="checkbox" value=""
-                                                            className={""}
-                                                            onChange={ () => {
-                                                                const isAdmin = inputs.roles.value.includes( ROLES.admin );
-                                                                let userRoles = [ ...inputs.roles.value ];
-                                                                if( isAdmin ) {
-                                                                    userRoles = userRoles.filter( ( role:number ) => role !== ROLES.admin );
-                                                                    inputs.roles.reset( userRoles );
-                                                                } else {
-                                                                    userRoles.push( ROLES.admin );
-                                                                    inputs.roles.reset( userRoles );
-                                                                }
-                                                            } }
-                                                            checked={ inputs.roles.value.includes( ROLES.admin ) }
-                                                            disabled={ !editMode }
-                                                        />
-                                                    </div>
-                                                    <label htmlFor="persist" className="ms-2 text-sm font-medium text-gray-900 dark:text-black">
-                                                        Admin
-                                                    </label>
-                                                </div>
+                                                <MyCheckBox id="admin" label={"Admin"} onChange={handleChangeRights} checked={ inputs.roles.value.includes( ROLES.admin ) } disabled={ !editMode } />
                                                 :
                                                 <></>
                                         }
                                     </div>
-
-                                    {
-                                        ( ( isMe || connectedUser.isAdmin ) && !editMode ) ?
-                                            <div className="px-6 py-4 flex justify-center;" style={ {justifyContent: "center" }}>
-                                                <div onClick={() => setEditMode( true ) }
-                                                    className="text-center justify-items-center p-2 cursor-pointer hover:scale-110 hover:bg-slate-200">
-                                                    <PencilIcon className="size-6 mx-2"/>
-                                                    <p>Modify User</p>
-                                                </div>
-                                                <div 
-                                                    onClick={handleDelete}
-                                                    className="justify-items-center p-2 cursor-pointer hover:scale-110 hover:bg-slate-200">
-                                                    <TrashIcon className="size-6 text-red-500 mx-2"></TrashIcon>
-                                                    <p>Delete User</p>
-                                                </div>
-                                            </div>
-                                            :
-                                            ( ( isMe || connectedUser.isAdmin ) && editMode ) ?
-                                                <div className="button-action-container text-center">
-                                                    <button
-                                                        onClick={handlerCancel}
-                                                        className="red-btn text-white font-bold py-2 px-4 rounded m-3">
-                                                    Cancel
-                                                    </button>
-                                                    <button
-                                                        onClick={handlerSave}
-                                                        className="blue-btn text-white font-bold py-2 px-4 rounded m-3">
-                                                    Save
-                                                    </button>
-                                                </div>
-                                                :
-                                                <></>
-                                    }
+                                    <FooterUpdateButtons
+                                        show={{ showActionButtons, showSaveCancelButtons }}
+                                        handlers={{
+                                            edit: setEditMode,
+                                            delete: handlerDelete,
+                                            save: handlerSave,
+                                            cancel: handlerCancel,
+                                        }}
+                                    />
                                 </div>
                             }
                         </Card>
@@ -345,9 +228,48 @@ const UserProfile = () => {
             }
         </div>
     );
+
 };
 
 export default UserProfile;
+
+/**
+ * Show Action buttons in footer form
+ * Edit - Delete / Save - Cancel
+ */
+function FooterUpdateButtons( { show, handlers } : FooterActions ) {
+    return (
+        show.showActionButtons ?
+            <div className="px-6 py-4 flex justify-center;" style={{ justifyContent: "center" }}>
+                <div onClick={() => handlers.edit(true)}
+                    className="text-center justify-items-center p-2 cursor-pointer hover:scale-110 hover:bg-slate-200">
+                    <PencilIcon className="size-6 mx-2" />
+                    <p>Modify User</p>
+                </div>
+                <div onClick={handlers.delete}
+                    className="justify-items-center p-2 cursor-pointer hover:scale-110 hover:bg-slate-200">
+                    <TrashIcon className="size-6 text-red-500 mx-2"></TrashIcon>
+                    <p>Delete User</p>
+                </div>
+            </div>
+            :
+            show.showSaveCancelButtons ?
+                <div className="button-action-container text-center">
+                    <button
+                        onClick={handlers.cancel}
+                        className="red-btn text-white font-bold py-2 px-4 rounded m-3">
+                    Cancel
+                    </button>
+                    <button
+                        onClick={handlers.save}
+                        className="blue-btn text-white font-bold py-2 px-4 rounded m-3">
+                    Save
+                    </button>
+                </div>
+                :
+                <></>
+    );
+}
 
 function Interactions( { username }:Readonly<{ username:string }> ) {
     return (
